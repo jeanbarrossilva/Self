@@ -4,7 +4,10 @@ object Versions {
     const val AURELIUS = "1.7.0"
     const val COMPOSE_COMPILER = "1.4.3"
     const val GRADLE = "7.4.2"
+    const val JUNIT = "4.13.2"
     const val KOTLIN = "1.8.10"
+    const val KOTLINX_COROUTINES = "1.6.4"
+    const val TURBINE = "0.12.1"
 
     val java = JavaVersion.VERSION_11
 
