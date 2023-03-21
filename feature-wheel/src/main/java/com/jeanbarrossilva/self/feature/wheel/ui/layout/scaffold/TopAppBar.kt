@@ -37,6 +37,7 @@ internal fun CollapsingToolbarScope.TopAppBar(
         modifier
             .pin()
             .background(SelfTheme.colors.elevated)
+            .padding(SelfTheme.sizes.margin.statusBar)
             .height(128.dp)
             .fillMaxWidth()
     )

@@ -7,4 +7,10 @@ data class Wheel internal constructor(val name: String, val areas: List<Area> = 
     init {
         assert(name.isNotBlank())
     }
+
+    operator fun get(areaName: String): Area? {
+        return areas.find {
+            it.name == areaName
+        }
+    }
 }

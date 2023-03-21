@@ -1,7 +1,7 @@
 package com.jeanbarrossilva.self.wheel.core.infra
 
 import com.jeanbarrossilva.self.wheel.core.domain.Wheel
-import com.jeanbarrossilva.self.wheel.core.utils.filterNamed
+import com.jeanbarrossilva.self.wheel.core.utils.get
 import kotlinx.coroutines.flow.first
 
 abstract class WheelRegister {
@@ -18,7 +18,7 @@ abstract class WheelRegister {
     protected abstract suspend fun onRegister(wheel: Wheel)
 
     private suspend fun assertDoestNotExist(name: String) {
-        val isNonexistent = repository.fetch().first().filterNamed(name).isEmpty()
+        val isNonexistent = repository.fetch().first()[name] == null
         assert(isNonexistent)
     }
 }

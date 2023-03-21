@@ -30,8 +30,8 @@ import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 
 @Composable
 internal fun Wheel(viewModel: WheelViewModel, onEdit: () -> Unit, modifier: Modifier = Modifier) {
-    viewModel.wheel.collectAsState().value.ifLoaded {
-        Wheel(this, onToDoToggle = { _, _, _ -> }, onEdit, modifier)
+    viewModel.wheelFlow.collectAsState().value.ifLoaded {
+        Wheel(this, onToDoToggle = viewModel::toggleToDo, onEdit, modifier)
     }
 }
 

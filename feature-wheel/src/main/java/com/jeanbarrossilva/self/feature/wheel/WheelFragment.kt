@@ -9,12 +9,16 @@ import androidx.fragment.app.viewModels
 import com.jeanbarrossilva.self.feature.wheel.databinding.FragmentWheelBinding
 import com.jeanbarrossilva.self.feature.wheel.scope.editingsheet.EditingSheetFragment
 import com.jeanbarrossilva.self.feature.wheel.ui.theme.SelfTheme
+import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRepository
 import org.koin.android.ext.android.inject
 
 internal class WheelFragment : Fragment() {
     private val repository by inject<WheelRepository>()
-    private val viewModel by viewModels<WheelViewModel> { WheelViewModel.createFactory(repository) }
+    private val editor by inject<WheelEditor>()
+    private val viewModel by viewModels<WheelViewModel> {
+        WheelViewModel.createFactory(repository, editor)
+    }
     private var binding: FragmentWheelBinding? = null
 
     override fun onCreateView(
