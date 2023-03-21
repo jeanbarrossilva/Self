@@ -1,3 +1,5 @@
 package com.jeanbarrossilva.self.feature.wheel.domain
 
-internal data class FeatureToDo(val title: String, val isDone: Boolean)
+import java.io.Serializable
+
+data class FeatureToDo internal constructor(val title: String, val isDone: Boolean) : Serializable

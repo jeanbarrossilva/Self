@@ -39,8 +39,10 @@ android {
 
 dependencies {
     implementation(project(":feature-wheel"))
+    implementation(project(":wheel-in-memory"))
     implementation(Libraries.AURELIUS)
     implementation(Libraries.KOIN)
     implementation(Libraries.NAVIGATION_FRAGMENT)
     implementation(Libraries.NAVIGATION_UI)
+    implementation(Libraries.PREFERENCE)
 }

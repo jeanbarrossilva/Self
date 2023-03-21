@@ -11,6 +11,7 @@ object Libraries {
     const val LOADABLE = "com.jeanbarrossilva.loadable:loadable:${Versions.LOADABLE}"
     const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment:${Versions.NAVIGATION}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui:${Versions.NAVIGATION}"
+    const val PREFERENCE = "androidx.preference:preference-ktx:${Versions.PREFERENCE}"
     const val TEST_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
     const val TURBINE = "app.cash.turbine:turbine:${Versions.TURBINE}"
     const val VICO = "com.patrykandpatrick.vico:compose-m3:${Versions.VICO}"

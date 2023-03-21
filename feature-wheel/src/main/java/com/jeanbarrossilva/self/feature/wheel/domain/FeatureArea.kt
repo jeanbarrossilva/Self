@@ -2,7 +2,7 @@ package com.jeanbarrossilva.self.feature.wheel.domain
 
 import java.io.Serializable
 
-internal data class FeatureArea(
+data class FeatureArea internal constructor(
     val name: String,
     val attention: Float,
     val toDos: List<FeatureToDo>
