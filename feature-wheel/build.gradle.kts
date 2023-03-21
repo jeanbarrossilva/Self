@@ -1,30 +1,33 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 @Suppress("UnstableApiUsage")
 android {
-    namespace = Metadata.namespace("app")
+    namespace = Metadata.namespace("feature.wheel")
     compileSdk = Versions.Self.SDK_COMPILE
 
     defaultConfig {
-        applicationId = Metadata.NAMESPACE
         minSdk = Versions.Self.SDK_MIN
         targetSdk = Versions.Self.SDK_TARGET
-        versionCode = Versions.Self.CODE
-        versionName = Versions.Self.NAME
         testInstrumentationRunner = Libraries.TEST_RUNNER
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        getByName(Variants.RELEASE) {
+        release {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+    }
+
+    buildFeatures {
+        compose = true
+        viewBinding = true
     }
 
     compileOptions {
@@ -35,12 +38,17 @@ android {
     kotlinOptions {
         jvmTarget = Versions.java.toString()
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
+    }
 }
 
 dependencies {
-    implementation(project(":feature-wheel"))
+    implementation(project(":wheel-in-memory"))
     implementation(Libraries.AURELIUS)
+    implementation(Libraries.COMPOSE_COLLAPSING_TOOLBAR)
     implementation(Libraries.KOIN)
-    implementation(Libraries.NAVIGATION_FRAGMENT)
-    implementation(Libraries.NAVIGATION_UI)
+    implementation(Libraries.LOADABLE)
+    implementation(Libraries.VICO)
 }

@@ -14,6 +14,7 @@ allprojects {
     repositories {
         aurelius(project)
         google()
+        jitPack()
         mavenCentral()
     }
 }

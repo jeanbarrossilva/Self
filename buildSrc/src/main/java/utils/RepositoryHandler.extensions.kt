@@ -21,3 +21,10 @@ fun RepositoryHandler.aurelius(project: Project): MavenArtifactRepository {
         }
     }
 }
+
+/** Adds the repository in which JitPack is located. **/
+fun RepositoryHandler.jitPack(): MavenArtifactRepository {
+    return maven {
+        url = URI.create("https://jitpack.io")
+    }
+}
