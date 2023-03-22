@@ -8,6 +8,9 @@ internal suspend fun WheelRegister.register(editor: WheelEditor, wheel: FeatureW
     register(wheel.name)
     wheel.areas.forEach { area ->
         editor.addArea(wheel.name, area.name, area.attention)
-        area.toDos.forEach { toDo -> editor.addToDo(wheel.name, area.name, toDo.title) }
+        area.toDos.forEach { toDo ->
+            editor.addToDo(wheel.name, area.name, toDo.title)
+            editor.toggleToDo(wheel.name, area.name, toDo.title, toDo.isDone)
+        }
     }
 }
