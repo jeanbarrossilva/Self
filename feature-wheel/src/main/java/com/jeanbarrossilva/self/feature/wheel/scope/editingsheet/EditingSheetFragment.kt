@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.jeanbarrossilva.self.feature.wheel.R
 import com.jeanbarrossilva.self.feature.wheel.databinding.FragmentEditingSheetBinding
-import com.jeanbarrossilva.self.feature.wheel.ui.theme.SelfTheme
+import com.jeanbarrossilva.self.platform.ui.R
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 internal class EditingSheetFragment : BottomSheetDialogFragment() {
     private var binding: FragmentEditingSheetBinding? = null

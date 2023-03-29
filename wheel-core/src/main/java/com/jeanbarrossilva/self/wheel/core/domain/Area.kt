@@ -6,6 +6,11 @@ data class Area(val name: String, val attention: Float, val toDos: List<ToDo> = 
     Serializable {
     init {
         assert(name.isNotBlank())
-        assert(attention in 0f..1f)
+        assert(attention in MIN_ATTENTION..MAX_ATTENTION)
+    }
+
+    companion object {
+        const val MIN_ATTENTION = 0f
+        const val MAX_ATTENTION = 1f
     }
 }

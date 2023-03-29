@@ -1,7 +1,12 @@
 rootProject.name = "Self"
-include(":app")
-include(":wheel-core")
-include(":wheel-in-memory")
-include(":wheel-core-test")
-include(":wheel-in-memory-test")
-include(":feature-wheel")
+include(
+    ":app",
+    ":feature-wheel",
+    ":feature-questionnaire",
+    ":platform-ui",
+    ":wheel-core",
+    ":wheel-core-test",
+    ":wheel-in-memory",
+    ":wheel-in-memory-test"
+)
+include(":wheel-android")

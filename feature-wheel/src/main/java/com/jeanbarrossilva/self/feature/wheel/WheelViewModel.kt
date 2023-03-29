@@ -9,6 +9,7 @@ import com.jeanbarrossilva.loadable.utils.unwrap
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
 import com.jeanbarrossilva.self.feature.wheel.utils.feature
+import com.jeanbarrossilva.self.wheel.core.domain.Wheel
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRepository
 import kotlinx.coroutines.flow.emitAll
@@ -21,12 +22,16 @@ internal class WheelViewModel(
     private val repository: WheelRepository,
     private val editor: WheelEditor
 ) : ViewModel() {
-    val wheelFlow = flow { emitAll(repository.fetch()) }.map { it.first().feature() }.loadable()
+    val wheelFlow = flow { emitAll(repository.fetch()) }
+        .map(List<Wheel>::firstOrNull)
+        .map { it?.feature() }
+        .loadable()
 
     fun toggleToDo(area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) {
         viewModelScope.launch {
-            val wheel = wheelFlow.unwrap().first()
-            editor.toggleToDo(wheel.name, area.name, toDo.title, isDone)
+            wheelFlow.unwrap().first()?.let { wheel ->
+                editor.toggleToDo(wheel.name, area.name, toDo.title, isDone)
+            }
         }
     }
 

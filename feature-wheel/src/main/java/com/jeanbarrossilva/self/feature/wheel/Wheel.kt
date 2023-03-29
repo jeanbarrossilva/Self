@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,23 +16,20 @@ import com.jeanbarrossilva.aurelius.ui.layout.scaffold.FloatingActionButton
 import com.jeanbarrossilva.aurelius.ui.layout.scaffold.Scaffold
 import com.jeanbarrossilva.aurelius.utils.plus
 import com.jeanbarrossilva.loadable.utils.collectAsState
-import com.jeanbarrossilva.loadable.utils.ifLoaded
+import com.jeanbarrossilva.loadable.utils.valueOrNull
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureWheel
-import com.jeanbarrossilva.self.feature.wheel.ui.layout.scaffold.TopAppBar
 import com.jeanbarrossilva.self.feature.wheel.ui.still.Chart
-import com.jeanbarrossilva.self.feature.wheel.ui.still.Container
 import com.jeanbarrossilva.self.feature.wheel.ui.still.ToDos
-import com.jeanbarrossilva.self.feature.wheel.ui.theme.SelfTheme
-import me.onebone.toolbar.CollapsingToolbarScaffold
-import me.onebone.toolbar.ScrollStrategy
-import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
+import com.jeanbarrossilva.self.platform.ui.layout.scaffold.TopAppBar
+import com.jeanbarrossilva.self.platform.ui.still.Container
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
 internal fun Wheel(viewModel: WheelViewModel, onEdit: () -> Unit, modifier: Modifier = Modifier) {
-    viewModel.wheelFlow.collectAsState().value.ifLoaded {
-        Wheel(this, onToDoToggle = viewModel::toggleToDo, onEdit, modifier)
+    viewModel.wheelFlow.collectAsState().value.valueOrNull?.let {
+        Wheel(it, onToDoToggle = viewModel::toggleToDo, onEdit, modifier)
     }
 }
 
@@ -42,21 +40,15 @@ internal fun Wheel(
     onEdit: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val collapsingToolbarScaffoldState = rememberCollapsingToolbarScaffoldState()
-
     Scaffold(
+        modifier,
         floatingActionButton = {
             FloatingActionButton(onClick = onEdit) {
                 Icon(Icons.Rounded.Edit, contentDescription = "Editar")
             }
         }
     ) {
-        CollapsingToolbarScaffold(
-            modifier,
-            collapsingToolbarScaffoldState,
-            ScrollStrategy.EnterAlways,
-            toolbar = { TopAppBar(collapsingToolbarScaffoldState.toolbarState, wheel) }
-        ) {
+        TopAppBar({ modifier, style -> Text(wheel.name, modifier, style = style) }) {
             Background {
                 LazyColumn(
                     contentPadding = PaddingValues(SelfTheme.sizes.spacing.large) +

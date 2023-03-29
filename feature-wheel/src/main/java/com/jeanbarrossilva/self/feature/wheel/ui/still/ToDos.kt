@@ -11,7 +11,7 @@ import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.background.BackgroundContentSizing
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
-import com.jeanbarrossilva.self.feature.wheel.ui.theme.SelfTheme
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
 internal fun ToDos(

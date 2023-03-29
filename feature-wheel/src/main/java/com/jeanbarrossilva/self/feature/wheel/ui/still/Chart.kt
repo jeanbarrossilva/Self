@@ -8,9 +8,9 @@ import com.jeanbarrossilva.aurelius.R
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.background.BackgroundContentSizing
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureWheel
-import com.jeanbarrossilva.self.feature.wheel.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.feature.wheel.utils.entryModelOf
 import com.jeanbarrossilva.self.feature.wheel.utils.typefaceResource
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis

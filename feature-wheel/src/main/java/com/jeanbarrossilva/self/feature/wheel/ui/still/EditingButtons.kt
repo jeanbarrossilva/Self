@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.background.BackgroundContentSizing
-import com.jeanbarrossilva.self.feature.wheel.ui.actionable.Button
-import com.jeanbarrossilva.self.feature.wheel.ui.theme.SelfTheme
+import com.jeanbarrossilva.self.platform.ui.actionable.Button
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
 internal fun EditingButtons(

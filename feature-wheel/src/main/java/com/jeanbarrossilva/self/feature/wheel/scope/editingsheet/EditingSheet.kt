@@ -7,9 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jeanbarrossilva.self.feature.wheel.ui.layout.sheet.Sheet
 import com.jeanbarrossilva.self.feature.wheel.ui.still.EditingButtons
-import com.jeanbarrossilva.self.feature.wheel.ui.theme.SelfTheme
+import com.jeanbarrossilva.self.platform.ui.sheet.Sheet
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
 internal fun EditingSheet(

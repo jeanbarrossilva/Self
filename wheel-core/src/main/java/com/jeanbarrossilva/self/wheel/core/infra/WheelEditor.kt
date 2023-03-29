@@ -42,12 +42,15 @@ abstract class WheelEditor {
     private suspend fun assertExists(wheelName: String, areaName: String) {
         assertExists(wheelName)
         val isAreaExistent = getWheel(wheelName)?.get(areaName) != null
-        assert(isAreaExistent)
+        assert(isAreaExistent) {
+            "Wheel \"$wheelName\" doesn't have an area named \"$areaName\", thus it cannot be " +
+                "edited."
+        }
     }
 
     private suspend fun assertExists(wheelName: String) {
         val isExistent = getWheel(wheelName) != null
-        assert(isExistent)
+        assert(isExistent) { "Cannot edit a nonexistent \"$wheelName\" wheel." }
     }
 
     private suspend fun getWheel(name: String): Wheel? {

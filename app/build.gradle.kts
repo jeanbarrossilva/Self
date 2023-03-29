@@ -14,7 +14,7 @@ android {
         targetSdk = Versions.Self.SDK_TARGET
         versionCode = Versions.Self.CODE
         versionName = Versions.Self.NAME
-        testInstrumentationRunner = Libraries.TEST_RUNNER
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -38,8 +38,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature-questionnaire"))
     implementation(project(":feature-wheel"))
-    implementation(project(":wheel-in-memory"))
+    implementation(project(":wheel-android"))
     implementation(Libraries.AURELIUS)
     implementation(Libraries.KOIN)
     implementation(Libraries.NAVIGATION_FRAGMENT)

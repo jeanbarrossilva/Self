@@ -10,8 +10,11 @@ android {
 
     defaultConfig {
         minSdk = Versions.Self.SDK_MIN
+
+        @Suppress("Deprecation")
         targetSdk = Versions.Self.SDK_TARGET
-        testInstrumentationRunner = Libraries.TEST_RUNNER
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -45,10 +48,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":wheel-in-memory"))
+    implementation(project(":platform-ui"))
+    implementation(project(":wheel-core"))
     implementation(Libraries.AURELIUS)
-    implementation(Libraries.COMPOSE_COLLAPSING_TOOLBAR)
     implementation(Libraries.KOIN)
     implementation(Libraries.LOADABLE)
+    implementation(Libraries.NAVIGATION_FRAGMENT)
     implementation(Libraries.VICO)
 }
