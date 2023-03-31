@@ -4,47 +4,59 @@ import android.animation.ObjectAnimator
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.Insets
+import com.jeanbarrossilva.self.feature.questionnaire.utils.space
 
 internal sealed class Overlap {
     abstract val amount: Int
 
     data class Left(override val amount: Int) : Overlap() {
         override fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams) {
-            animate(amount, layoutParams.leftMargin) {
+            animate(view, layoutParams, layoutParams.leftMargin) {
                 layoutParams.leftMargin = it
-                view.layoutParams = layoutParams
             }
         }
     }
 
     data class Top(override val amount: Int) : Overlap() {
         override fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams) {
-            animate(amount, layoutParams.topMargin) {
+            animate(view, layoutParams, layoutParams.topMargin) {
                 layoutParams.topMargin = it
-                view.layoutParams = layoutParams
             }
         }
     }
 
     data class Right(override val amount: Int) : Overlap() {
         override fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams) {
-            animate(amount, layoutParams.rightMargin) {
+            animate(view, layoutParams, layoutParams.rightMargin) {
                 layoutParams.rightMargin = it
-                view.layoutParams = layoutParams
             }
         }
     }
 
     data class Bottom(override val amount: Int) : Overlap() {
         override fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams) {
-            animate(amount, layoutParams.bottomMargin) {
-                layoutParams.bottomMargin = it
-                view.layoutParams = layoutParams
+            animate(view, layoutParams, layoutParams.bottomMargin) {
+                bottomMargin = it
             }
         }
     }
 
     abstract fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams)
+
+    protected fun animate(
+        view: View,
+        layoutParams: ViewGroup.MarginLayoutParams,
+        target: Int,
+        onChange: ViewGroup.MarginLayoutParams.(amount: Int) -> Unit
+    ) {
+        val animator = ObjectAnimator.ofInt(amount, target)
+        animator.addUpdateListener {
+            view.layoutParams = layoutParams.apply {
+                onChange(it.animatedValue as Int)
+            }
+        }
+        animator.start()
+    }
 
     companion object {
         fun from(insets: List<Insets>, view: View): List<Overlap> {
@@ -55,17 +67,19 @@ internal sealed class Overlap {
 
         private fun from(insets: Insets, view: View): List<Overlap> {
             val overlaps = mutableListOf<Overlap>()
-            if (view.left <= insets.left) overlaps.add(Left(insets.left))
-            if (view.top <= insets.top) overlaps.add(Top(insets.top))
-            if (view.right >= insets.right) overlaps.add(Right(insets.right))
-            if (view.bottom >= insets.bottom) overlaps.add(Bottom(insets.bottom))
+            if (view.space.left < insets.left) {
+                overlaps.add(Left(view.space.left + insets.left))
+            }
+            if (view.space.top < insets.top) {
+                overlaps.add(Top(view.space.top + insets.top))
+            }
+            if (view.space.right > insets.right) {
+                overlaps.add(Right(view.space.right - insets.right))
+            }
+            if (view.space.bottom > insets.bottom) {
+                overlaps.add(Bottom(view.space.bottom - insets.bottom))
+            }
             return overlaps.toList()
-        }
-
-        private fun animate(origin: Int, target: Int, onChange: (amount: Int) -> Unit) {
-            val animator = ObjectAnimator.ofInt(origin, target)
-            animator.addUpdateListener { onChange(it.animatedValue as Int) }
-            animator.start()
         }
     }
 }

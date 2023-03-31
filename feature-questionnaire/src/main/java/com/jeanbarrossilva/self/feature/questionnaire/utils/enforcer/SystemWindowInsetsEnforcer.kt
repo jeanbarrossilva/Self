@@ -1,6 +1,7 @@
 package com.jeanbarrossilva.self.feature.questionnaire.utils.enforcer
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.WindowInsetsCompat
@@ -9,6 +10,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.jeanbarrossilva.self.feature.questionnaire.utils.enforcer.overlap.Overlap
+import com.jeanbarrossilva.self.feature.questionnaire.utils.space
 import com.jeanbarrossilva.self.platform.ui.utils.rootWindowInsetsCompat
 import com.jeanbarrossilva.self.platform.ui.utils.toWindowInsetsCompat
 import com.jeanbarrossilva.self.platform.ui.utils.windowInsetsControllerCompat
@@ -17,6 +19,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 internal object SystemWindowInsetsEnforcer {
+    private const val TAG = "SystemWindowInsetsEnforcer"
+
     fun enforce(
         view: View,
         buildLayoutParams: (width: Int, height: Int) -> ViewGroup.MarginLayoutParams
@@ -85,5 +89,6 @@ internal object SystemWindowInsetsEnforcer {
                 it.compensate(view, this)
             }
         }
+        Log.d(TAG, "enforce view.space: ${view.space}")
     }
 }
