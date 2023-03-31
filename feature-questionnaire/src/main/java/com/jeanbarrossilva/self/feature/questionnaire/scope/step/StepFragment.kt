@@ -2,11 +2,9 @@ package com.jeanbarrossilva.self.feature.questionnaire.scope.step
 
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
 import com.jeanbarrossilva.self.feature.questionnaire.databinding.FragmentStepBinding
-import com.jeanbarrossilva.self.feature.questionnaire.utils.view.applySystemWindowInsetsAsMargin
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.platform.ui.utils.imeController
@@ -23,7 +21,6 @@ internal abstract class StepFragment : BindingFragment<FragmentStepBinding>() {
 
     override fun onResume() {
         super.onResume()
-        applySystemWindowInsetsAsMargins()
         onFocus()
     }
 
@@ -60,12 +57,6 @@ internal abstract class StepFragment : BindingFragment<FragmentStepBinding>() {
             SelfTheme {
                 Content()
             }
-        }
-    }
-
-    private fun applySystemWindowInsetsAsMargins() {
-        view?.applySystemWindowInsetsAsMargin { width, height ->
-            FrameLayout.LayoutParams(width, height)
         }
     }
 }

@@ -12,7 +12,7 @@ import com.jeanbarrossilva.self.platform.ui.core.ime.ImeController
 internal fun ProvideImeController(content: @Composable () -> Unit) {
     val activity = LocalContext.current as? Activity
     val view = LocalView.current
-    val imeController = remember(activity, view) { ImeController(activity?.window, view) }
+    val imeController = remember(activity, view) { ImeController(view) }
 
     CompositionLocalProvider(LocalImeController provides imeController, content = content)
 }

@@ -2,10 +2,12 @@ package com.jeanbarrossilva.self.feature.questionnaire
 
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.jeanbarrossilva.self.feature.questionnaire.databinding.FragmentQuestionnaireBinding
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Swiper
+import com.jeanbarrossilva.self.feature.questionnaire.utils.enforceSystemWindowInsets
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRegister
@@ -41,6 +43,17 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
             swiper = Swiper(this)
             adapter = QuestionnaireAdapter(this@QuestionnaireFragment, ::onDone)
             isUserInputEnabled = false
+
+            // ViewPager2 appears to ignore the system's window insets and lays its content behind
+            // status and navigation bars. Meticulous observation and constant fixes are required
+            // for it not to happen and for these to be actually considered.
+            //
+            // This issue has been reported and the given fix hasn't done the job in my case, so
+            // enforceSystemWindowInsets handles it all gracefully.
+            // (https://issuetracker.google.com/issues/145617093#comment10)
+            enforceSystemWindowInsets { width, height ->
+                FrameLayout.LayoutParams(width, height)
+            }
         }
     }
 
