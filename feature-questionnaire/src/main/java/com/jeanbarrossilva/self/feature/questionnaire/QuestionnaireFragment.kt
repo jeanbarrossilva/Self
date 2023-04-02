@@ -3,14 +3,18 @@ package com.jeanbarrossilva.self.feature.questionnaire
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
-import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.jeanbarrossilva.self.feature.questionnaire.databinding.FragmentQuestionnaireBinding
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Swiper
+import com.jeanbarrossilva.self.feature.questionnaire.utils.OnBackPressedCallback
 import com.jeanbarrossilva.self.feature.questionnaire.utils.enforceSystemWindowInsets
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRegister
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -22,11 +26,6 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
     private val viewModel by viewModel<QuestionnaireViewModel> {
         parametersOf(requireActivity().application, register, editor)
     }
-    private val onBackPressedCallback = object : OnBackPressedCallback(enabled = true) {
-        override fun handleOnBackPressed() {
-            swiper?.swipeBackwards()
-        }
-    }
 
     internal var swiper: Swiper? = null
 
@@ -34,11 +33,25 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
         viewModel.registerWheel()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setUpPager()
+        swipeBackwardsOnBackPressed()
+    }
+
+    private fun swipeBackwardsOnBackPressed() {
+        val callback = OnBackPressedCallback { swiper?.swipeBackwards() }
+        activity?.onBackPressedDispatcher?.addCallback(callback)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.DESTROYED) {
+                callback.remove()
+            }
+        }
+    }
+
+    private fun setUpPager() {
         binding?.root?.apply {
             swiper = Swiper(this)
             adapter = QuestionnaireAdapter(this@QuestionnaireFragment, ::onDone)
@@ -51,15 +64,8 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
             // This issue has been reported and the given fix hasn't done the job in my case, so
             // enforceSystemWindowInsets handles it all gracefully.
             // (https://issuetracker.google.com/issues/145617093#comment10)
-            enforceSystemWindowInsets { width, height ->
-                FrameLayout.LayoutParams(width, height)
-            }
+            enforceSystemWindowInsets<FrameLayout.LayoutParams>()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        onBackPressedCallback.remove()
     }
 
     private fun onDone() {

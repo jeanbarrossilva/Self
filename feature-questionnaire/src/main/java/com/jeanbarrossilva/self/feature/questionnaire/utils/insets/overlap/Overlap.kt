@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.questionnaire.utils.enforcer.overlap
+package com.jeanbarrossilva.self.feature.questionnaire.utils.insets.overlap
 
 import android.animation.ObjectAnimator
 import android.view.View
@@ -7,7 +7,7 @@ import androidx.core.graphics.Insets
 import com.jeanbarrossilva.self.feature.questionnaire.utils.space
 
 internal sealed class Overlap {
-    abstract val amount: Int
+    protected abstract val amount: Int
 
     data class Left(override val amount: Int) : Overlap() {
         override fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams) {
@@ -20,7 +20,7 @@ internal sealed class Overlap {
     data class Top(override val amount: Int) : Overlap() {
         override fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams) {
             animate(view, layoutParams, layoutParams.topMargin) {
-                layoutParams.topMargin = it
+                topMargin = it
             }
         }
     }
@@ -28,7 +28,7 @@ internal sealed class Overlap {
     data class Right(override val amount: Int) : Overlap() {
         override fun compensate(view: View, layoutParams: ViewGroup.MarginLayoutParams) {
             animate(view, layoutParams, layoutParams.rightMargin) {
-                layoutParams.rightMargin = it
+                rightMargin = it
             }
         }
     }
@@ -46,10 +46,10 @@ internal sealed class Overlap {
     protected fun animate(
         view: View,
         layoutParams: ViewGroup.MarginLayoutParams,
-        target: Int,
-        onChange: ViewGroup.MarginLayoutParams.(amount: Int) -> Unit
+        origin: Int,
+        onChange: ViewGroup.MarginLayoutParams.(Int) -> Unit
     ) {
-        val animator = ObjectAnimator.ofInt(amount, target)
+        val animator = ObjectAnimator.ofInt(origin, amount)
         animator.addUpdateListener {
             view.layoutParams = layoutParams.apply {
                 onChange(it.animatedValue as Int)
@@ -59,19 +59,13 @@ internal sealed class Overlap {
     }
 
     companion object {
-        fun from(insets: List<Insets>, view: View): List<Overlap> {
-            return insets.flatMap {
-                from(it, view)
-            }
-        }
-
-        private fun from(insets: Insets, view: View): List<Overlap> {
+        fun from(insets: Insets, view: View): List<Overlap> {
             val overlaps = mutableListOf<Overlap>()
             if (view.space.left < insets.left) {
-                overlaps.add(Left(view.space.left + insets.left))
+                overlaps.add(Left(insets.left - view.space.left))
             }
             if (view.space.top < insets.top) {
-                overlaps.add(Top(view.space.top + insets.top))
+                overlaps.add(Top(insets.top - view.space.top))
             }
             if (view.space.right > insets.right) {
                 overlaps.add(Right(view.space.right - insets.right))

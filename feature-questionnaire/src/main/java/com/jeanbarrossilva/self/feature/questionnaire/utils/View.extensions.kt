@@ -1,13 +1,12 @@
 package com.jeanbarrossilva.self.feature.questionnaire.utils
 
+import android.app.Activity
 import android.graphics.Rect
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.core.view.marginTop
-import com.jeanbarrossilva.self.feature.questionnaire.utils.enforcer.SystemWindowInsetsEnforcer
 
 /** [Rect] in which this [View]'s contents are drawn that disregards padding and margin. **/
 internal val View.space
@@ -18,8 +17,18 @@ internal val View.space
         bottom - paddingBottom - marginBottom
     )
 
-internal fun View.enforceSystemWindowInsets(
-    buildLayoutParams: (width: Int, height: Int) -> ViewGroup.MarginLayoutParams
-) {
-    SystemWindowInsetsEnforcer.enforce(this, buildLayoutParams)
+internal val View.window
+    get() = (context as? Activity)?.window
+
+internal fun View.doOnDetach(block: (View) -> Unit) {
+    addOnAttachStateChangeListener(
+        object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+            }
+
+            override fun onViewDetachedFromWindow(v: View) {
+                block(v)
+            }
+        }
+    )
 }

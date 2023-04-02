@@ -51,6 +51,7 @@ android {
 dependencies {
     implementation(project(":platform-ui"))
     implementation(project(":wheel-in-memory"))
+    implementation(kotlin("reflect"))
     implementation(Libraries.AURELIUS)
     implementation(Libraries.COMPOSE_COLLAPSING_TOOLBAR)
     implementation(Libraries.COMPOSE_FOUNDATION)
