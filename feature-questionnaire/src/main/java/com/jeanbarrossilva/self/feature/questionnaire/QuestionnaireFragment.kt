@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.jeanbarrossilva.self.feature.questionnaire.databinding.FragmentQuestionnaireBinding
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Swiper
+import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention
 import com.jeanbarrossilva.self.feature.questionnaire.utils.OnBackPressedCallback
 import com.jeanbarrossilva.self.feature.questionnaire.utils.enforceSystemWindowInsets
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
@@ -27,33 +27,22 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
         parametersOf(requireActivity().application, register, editor)
     }
 
-    internal var swiper: Swiper? = null
-
     override val bindingClass = FragmentQuestionnaireBinding::class
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setUpPager()
-        swipeBackwardsOnBackPressed()
-    }
-
-    private fun swipeBackwardsOnBackPressed() {
-        val callback = OnBackPressedCallback { swiper?.swipeBackwards() }
-        activity?.onBackPressedDispatcher?.addCallback(callback)
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.DESTROYED) {
-                callback.remove()
-            }
-        }
+        swipeBackOnBackPressed()
     }
 
     private fun setUpPager() {
         binding?.root?.apply {
-            swiper = Swiper(this)
-            adapter = QuestionnaireAdapter(this@QuestionnaireFragment, ::onDone)
+            adapter = QuestionnaireAdapter(
+                this@QuestionnaireFragment,
+                ::onPrevious,
+                ::onNext,
+                ::onNext,
+                ::onDone
+            )
             isUserInputEnabled = false
 
             // ViewPager2 appears to ignore the system's window insets and lays its content behind
@@ -64,6 +53,35 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
             // enforceSystemWindowInsets handles it all gracefully.
             // (https://issuetracker.google.com/issues/145617093#comment10)
             enforceSystemWindowInsets<FrameLayout.LayoutParams>()
+        }
+    }
+
+    private fun swipeBackOnBackPressed() {
+        val callback = OnBackPressedCallback(handleOnBackPressed = ::onPrevious)
+        activity?.onBackPressedDispatcher?.addCallback(callback)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.DESTROYED) {
+                callback.remove()
+            }
+        }
+    }
+
+    private fun onPrevious() {
+        binding?.root?.run {
+            setCurrentItem(currentItem - 1, true)
+        }
+    }
+
+    private fun onNext(areaName: String?, @Attention answer: Float) {
+        areaName?.let {
+            viewModel.answer(it, answer)
+            onNext()
+        }
+    }
+
+    private fun onNext() {
+        binding?.root?.run {
+            setCurrentItem(currentItem + 1, true)
         }
     }
 

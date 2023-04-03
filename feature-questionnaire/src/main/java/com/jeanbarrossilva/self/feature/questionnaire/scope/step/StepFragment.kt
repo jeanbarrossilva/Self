@@ -12,7 +12,8 @@ import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.platform.ui.utils.imeController
 
 internal abstract class StepFragment() : BindingFragment<FragmentStepBinding>() {
-    private var swiper: Swiper? = null
+    private var onPreviousListener: OnPreviousListener? = null
+    private var onNextListener: OnNextListener? = null
     private var onDoneListener: OnDoneListener? = null
 
     protected val position
@@ -21,13 +22,23 @@ internal abstract class StepFragment() : BindingFragment<FragmentStepBinding>() 
     override val bindingClass = FragmentStepBinding::class
 
     constructor(
-        swiper: Swiper,
         position: StepPosition,
+        onPreviousListener: OnPreviousListener,
+        onNextListener: OnNextListener,
         onDoneListener: OnDoneListener
     ) : this() {
-        this.swiper = swiper
+        this.onPreviousListener = onPreviousListener
+        this.onNextListener = onNextListener
         this.onDoneListener = onDoneListener
         arguments = bundleOf(POSITION_KEY to position)
+    }
+
+    fun interface OnPreviousListener {
+        fun onPrevious()
+    }
+
+    fun interface OnNextListener {
+        fun onNext()
     }
 
     fun interface OnDoneListener {
@@ -45,7 +56,7 @@ internal abstract class StepFragment() : BindingFragment<FragmentStepBinding>() 
 
     override fun onDestroy() {
         super.onDestroy()
-        swiper = null
+        onNextListener = null
         onDoneListener = null
     }
 
@@ -60,7 +71,7 @@ internal abstract class StepFragment() : BindingFragment<FragmentStepBinding>() 
 
     @CallSuper
     protected open fun onPrevious() {
-        swiper?.swipeBackwards()
+        onPreviousListener?.onPrevious()
     }
 
     @CallSuper
@@ -68,7 +79,7 @@ internal abstract class StepFragment() : BindingFragment<FragmentStepBinding>() 
         if (position == StepPosition.TRAILING) {
             onDoneListener?.onDone()
         } else {
-            swiper?.swipeForward()
+            onNextListener?.onNext()
         }
     }
 

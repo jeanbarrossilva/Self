@@ -4,13 +4,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Swiper
 
 internal class AnnouncementFragment : StepFragment {
     constructor() : super()
 
-    constructor(swiper: Swiper, position: StepPosition, onDoneListener: OnDoneListener) :
-        super(swiper, position, onDoneListener)
+    constructor(
+        position: StepPosition,
+        onPreviousListener: OnPreviousListener,
+        onNextListener: OnNextListener,
+        onDoneListener: OnDoneListener
+    ) : super(position, onPreviousListener, onNextListener, onDoneListener)
 
     @Composable
     @Suppress("SpellCheckingInspection")

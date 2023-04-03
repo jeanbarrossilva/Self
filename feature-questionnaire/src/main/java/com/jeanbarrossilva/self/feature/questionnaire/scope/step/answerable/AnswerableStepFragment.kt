@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.FocusRequester
 import androidx.fragment.app.viewModels
 import com.jeanbarrossilva.self.feature.questionnaire.QuestionnaireViewModel
+import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Swiper
 import com.jeanbarrossilva.self.feature.questionnaire.utils.tryToRequestFocus
 import com.jeanbarrossilva.self.platform.ui.utils.imeController
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,8 +22,22 @@ internal abstract class AnswerableStepFragment : StepFragment {
 
     constructor() : super()
 
-    constructor(swiper: Swiper, position: StepPosition, onDoneListener: OnDoneListener) :
-        super(swiper, position, onDoneListener)
+    constructor(
+        position: StepPosition,
+        onPreviousListener: OnPreviousListener,
+        onNextListener: OnNextListener,
+        onDoneListener: OnDoneListener
+    ) : super(position, onPreviousListener, onNextListener, onDoneListener)
+
+    fun interface OnNextListener : StepFragment.OnNextListener {
+        override fun onNext() {
+            throw IllegalStateException(
+                "Cannot call onNext without areaName and answer parameters."
+            )
+        }
+
+        fun onNext(areaName: String, @Attention answer: Float)
+    }
 
     override fun onFocus() {
         answerFocusRequester.tryToRequestFocus()

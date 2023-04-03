@@ -1,7 +1,6 @@
 package com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type
 
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Swiper
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.AnswerableStepFragment
 
 internal class WorkFragment : AnswerableStepFragment {
@@ -13,6 +12,10 @@ internal class WorkFragment : AnswerableStepFragment {
 
     constructor() : super()
 
-    constructor(swiper: Swiper, position: StepPosition, onDoneListener: OnDoneListener) :
-        super(swiper, position, onDoneListener)
+    constructor(
+        position: StepPosition,
+        onPreviousListener: OnPreviousListener,
+        onNextListener: OnNextListener,
+        onDoneListener: OnDoneListener
+    ) : super(position, onPreviousListener, onNextListener, onDoneListener)
 }
