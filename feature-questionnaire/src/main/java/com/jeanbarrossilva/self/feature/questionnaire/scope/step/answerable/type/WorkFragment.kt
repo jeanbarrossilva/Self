@@ -15,7 +15,6 @@ internal class WorkFragment : AnswerableStepFragment {
     constructor(
         position: StepPosition,
         onPreviousListener: OnPreviousListener,
-        onNextListener: OnNextListener,
-        onDoneListener: OnDoneListener
-    ) : super(position, onPreviousListener, onNextListener, onDoneListener)
+        onNextListener: OnNextListener
+    ) : super(position, onPreviousListener, onNextListener)
 }

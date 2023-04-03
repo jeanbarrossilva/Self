@@ -4,17 +4,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.FocusRequester
 import androidx.fragment.app.viewModels
-import com.jeanbarrossilva.self.feature.questionnaire.QuestionnaireViewModel
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
 import com.jeanbarrossilva.self.feature.questionnaire.utils.tryToRequestFocus
 import com.jeanbarrossilva.self.platform.ui.utils.imeController
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal abstract class AnswerableStepFragment : StepFragment {
-    private val questionnaireViewModel by viewModel<QuestionnaireViewModel>()
     private val viewModel by viewModels<AnswerableStepViewModel>()
+    private var onNextListener: OnNextListener? = null
     private val answerFocusRequester = FocusRequester()
 
     protected abstract val areaName: String
@@ -25,17 +23,12 @@ internal abstract class AnswerableStepFragment : StepFragment {
     constructor(
         position: StepPosition,
         onPreviousListener: OnPreviousListener,
-        onNextListener: OnNextListener,
-        onDoneListener: OnDoneListener
-    ) : super(position, onPreviousListener, onNextListener, onDoneListener)
+        onNextListener: OnNextListener
+    ) : super(position, onPreviousListener) {
+        this.onNextListener = onNextListener
+    }
 
-    fun interface OnNextListener : StepFragment.OnNextListener {
-        override fun onNext() {
-            throw IllegalStateException(
-                "Cannot call onNext without areaName and answer parameters."
-            )
-        }
-
+    fun interface OnNextListener {
         fun onNext(areaName: String, @Attention answer: Float)
     }
 
@@ -57,9 +50,11 @@ internal abstract class AnswerableStepFragment : StepFragment {
         Text("Numa escala de 0 a 100%, quanto tempo você dedica $titleEnding?")
     }
 
-    override fun onNext() {
+    private fun onNext() {
+        val onNextListener = onNextListener
         val answer = viewModel.getAnswerFlow().value
-        questionnaireViewModel.answer(areaName, answer)
-        super.onNext()
+        if (onNextListener != null && answer != null) {
+            onNextListener.onNext(areaName, answer)
+        }
     }
 }

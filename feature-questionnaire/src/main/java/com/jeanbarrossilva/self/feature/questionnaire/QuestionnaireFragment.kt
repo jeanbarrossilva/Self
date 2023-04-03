@@ -39,9 +39,8 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
             adapter = QuestionnaireAdapter(
                 this@QuestionnaireFragment,
                 ::onPrevious,
-                ::onNext,
-                ::onNext,
-                ::onDone
+                onNextUnanswerableListener = ::navigateToNextPageOrFinish,
+                onNextAnswerableListener = ::answer
             )
             isUserInputEnabled = false
 
@@ -72,16 +71,18 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
         }
     }
 
-    private fun onNext(areaName: String?, @Attention answer: Float) {
-        areaName?.let {
-            viewModel.answer(it, answer)
-            onNext()
-        }
+    private fun answer(areaName: String, @Attention answer: Float) {
+        viewModel.answer(areaName, answer)
+        navigateToNextPageOrFinish()
     }
 
-    private fun onNext() {
+    private fun navigateToNextPageOrFinish() {
         binding?.root?.run {
-            setCurrentItem(currentItem + 1, true)
+            if (currentItem == adapter?.itemCount?.minus(1)) {
+                onDone()
+            } else {
+                setCurrentItem(currentItem + 1, true)
+            }
         }
     }
 

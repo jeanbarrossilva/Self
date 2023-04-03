@@ -9,64 +9,28 @@ import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.LeisureFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.StudiesFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.WorkFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.type.AnnouncementFragment
+import com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.UnanswerableStepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.type.AnnouncementFragment
 
 internal class QuestionnaireAdapter(
     fragment: QuestionnaireFragment,
-    private val onPreviousListener: StepFragment.OnPreviousListener,
-    private val onNextListener: StepFragment.OnNextListener,
-    private val onNextAnswerableListener: AnswerableStepFragment.OnNextListener,
-    private val onDoneListener: StepFragment.OnDoneListener
+    onPreviousListener: StepFragment.OnPreviousListener,
+    onNextUnanswerableListener: UnanswerableStepFragment.OnNextListener,
+    onNextAnswerableListener: AnswerableStepFragment.OnNextListener
 ) : FragmentStateAdapter(fragment) {
-    private val children
-        get() = listOf(
-            lazy {
-                AnnouncementFragment(
-                    StepPosition.LEADING,
-                    onPreviousListener,
-                    onNextListener,
-                    onDoneListener
-                )
-            },
-            lazy {
-                FamilyFragment(
-                    StepPosition.IN_BETWEEN,
-                    onPreviousListener,
-                    onNextAnswerableListener,
-                    onDoneListener
-                )
-            },
-            lazy {
-                WorkFragment(
-                    StepPosition.IN_BETWEEN,
-                    onPreviousListener,
-                    onNextAnswerableListener,
-                    onDoneListener
-                )
-            },
-            lazy {
-                StudiesFragment(
-                    StepPosition.IN_BETWEEN,
-                    onPreviousListener,
-                    onNextAnswerableListener,
-                    onDoneListener
-                )
-            },
-            lazy {
-                LeisureFragment(
-                    StepPosition.TRAILING,
-                    onPreviousListener,
-                    onNextAnswerableListener,
-                    onDoneListener
-                )
-            }
-        )
+    private val children = listOf(
+        AnnouncementFragment(StepPosition.LEADING, onPreviousListener, onNextUnanswerableListener),
+        FamilyFragment(StepPosition.IN_BETWEEN, onPreviousListener, onNextAnswerableListener),
+        WorkFragment(StepPosition.IN_BETWEEN, onPreviousListener, onNextAnswerableListener),
+        StudiesFragment(StepPosition.IN_BETWEEN, onPreviousListener, onNextAnswerableListener),
+        LeisureFragment(StepPosition.TRAILING, onPreviousListener, onNextAnswerableListener)
+    )
 
     override fun getItemCount(): Int {
         return children.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        return children[position].value
+        return children[position]
     }
 }

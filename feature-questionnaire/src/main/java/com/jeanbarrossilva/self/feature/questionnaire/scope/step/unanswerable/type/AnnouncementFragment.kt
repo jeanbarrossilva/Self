@@ -1,19 +1,18 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.type
+package com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.type
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.UnanswerableStepFragment
 
-internal class AnnouncementFragment : StepFragment {
+internal class AnnouncementFragment : UnanswerableStepFragment {
     constructor() : super()
 
     constructor(
         position: StepPosition,
         onPreviousListener: OnPreviousListener,
-        onNextListener: OnNextListener,
-        onDoneListener: OnDoneListener
-    ) : super(position, onPreviousListener, onNextListener, onDoneListener)
+        onNextListener: OnNextListener
+    ) : super(position, onPreviousListener, onNextListener)
 
     @Composable
     @Suppress("SpellCheckingInspection")
