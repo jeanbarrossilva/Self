@@ -6,17 +6,24 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.fragment.app.viewModels
 import com.jeanbarrossilva.self.feature.questionnaire.QuestionnaireViewModel
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Swiper
 import com.jeanbarrossilva.self.feature.questionnaire.utils.tryToRequestFocus
 import com.jeanbarrossilva.self.platform.ui.utils.imeController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-internal abstract class AnswerableStepFragment : StepFragment() {
+internal abstract class AnswerableStepFragment : StepFragment {
     private val questionnaireViewModel by viewModel<QuestionnaireViewModel>()
     private val viewModel by viewModels<AnswerableStepViewModel>()
     private val answerFocusRequester = FocusRequester()
 
     protected abstract val areaName: String
     protected abstract val titleEnding: String
+
+    constructor() : super()
+
+    constructor(swiper: Swiper, position: StepPosition, onDoneListener: OnDoneListener) :
+        super(swiper, position, onDoneListener)
 
     override fun onFocus() {
         answerFocusRequester.tryToRequestFocus()

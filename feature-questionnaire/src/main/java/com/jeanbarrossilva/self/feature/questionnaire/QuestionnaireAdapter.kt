@@ -2,6 +2,7 @@ package com.jeanbarrossilva.self.feature.questionnaire
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.FamilyFragment
 import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.LeisureFragment
@@ -11,15 +12,15 @@ import com.jeanbarrossilva.self.feature.questionnaire.scope.step.type.Announceme
 
 internal class QuestionnaireAdapter(
     private val fragment: QuestionnaireFragment,
-    private val onDone: () -> Unit
+    private val onDoneListener: StepFragment.OnDoneListener
 ) : FragmentStateAdapter(fragment) {
     private val children
         get() = listOf(
-            lazy { AnnouncementFragment(swiper, StepPosition.LEADING, onDone) },
-            lazy { FamilyFragment(swiper, StepPosition.IN_BETWEEN, onDone) },
-            lazy { WorkFragment(swiper, StepPosition.IN_BETWEEN, onDone) },
-            lazy { StudiesFragment(swiper, StepPosition.IN_BETWEEN, onDone) },
-            lazy { LeisureFragment(swiper, StepPosition.TRAILING, onDone) }
+            lazy { AnnouncementFragment(swiper, StepPosition.LEADING, onDoneListener) },
+            lazy { FamilyFragment(swiper, StepPosition.IN_BETWEEN, onDoneListener) },
+            lazy { WorkFragment(swiper, StepPosition.IN_BETWEEN, onDoneListener) },
+            lazy { StudiesFragment(swiper, StepPosition.IN_BETWEEN, onDoneListener) },
+            lazy { LeisureFragment(swiper, StepPosition.TRAILING, onDoneListener) }
         )
     private val swiper
         get() = fragment.swiper
