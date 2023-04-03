@@ -45,6 +45,7 @@ internal abstract class StepFragment() : BindingFragment<FragmentStepBinding>() 
 
     override fun onDestroy() {
         super.onDestroy()
+        swiper = null
         onDoneListener = null
     }
 
