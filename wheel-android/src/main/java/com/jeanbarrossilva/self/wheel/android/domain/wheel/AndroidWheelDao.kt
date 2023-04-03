@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class AndroidWheelDao internal constructor() {
-    @Query("SELECT * FROM areas")
+    @Query("SELECT * FROM wheels")
     internal abstract fun selectAll(): Flow<List<AndroidWheelEntity>>
 
-    @Query("SELECT * FROM areas WHERE name = :name")
+    @Query("SELECT * FROM wheels WHERE name = :name")
     internal abstract fun selectByName(name: String): Flow<List<AndroidWheelEntity>>
 
     @Insert
@@ -19,6 +19,6 @@ abstract class AndroidWheelDao internal constructor() {
     @Query("UPDATE wheels SET name = :name WHERE id = :id")
     internal abstract suspend fun setName(id: Long, name: String)
 
-    @Query("DELETE FROM areas")
+    @Query("DELETE FROM wheels")
     internal abstract suspend fun deleteAll()
 }

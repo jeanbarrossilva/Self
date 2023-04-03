@@ -26,16 +26,16 @@ import kotlinx.coroutines.launch
 internal object SystemWindowInsetsEnforcer {
     private const val TAG = "SystemWindowInsetsEnforcer"
 
-    inline fun <reified T : ViewGroup.MarginLayoutParams> enforce(viewPager: ViewPager2) {
+    inline fun <reified T : ViewGroup.MarginLayoutParams> enforce(viewPager2: ViewPager2) {
         // System window insets get ignored after the page's been resumed to for the second time.
-        enforceAfterResumed<T>(viewPager)
+        enforceAfterResumed<T>(viewPager2)
 
         // One scenario in which this is essential is when the IME was visible on the previous page
         // and continues to do so after the user's been taken to the next one. If we don't dispatch
         // the up-to-date window insets applied to the root view and the IME continues to be visible
         // on the next page, system-window-insets-aware UI components (such as a Composable with
         // Modifier.imePadding) won't be placed correctly.
-        dispatchOnPageSelection(viewPager)
+        dispatchOnPageSelection(viewPager2)
     }
 
     private inline fun <reified T : ViewGroup.MarginLayoutParams> enforceAfterResumed(
@@ -70,8 +70,8 @@ internal object SystemWindowInsetsEnforcer {
     ) {
         try {
             updateLayoutParams<T>(viewPager2, windowInsets)
-        } catch (_: NoSuchMethodException) {
-            Log.e(TAG, "Couldn't update ViewPager2's LayoutParams.")
+        } catch (error: NoSuchMethodException) {
+            Log.e(TAG, error.message ?: "Couldn't update ViewPager2's LayoutParams.")
         }
     }
 
@@ -79,14 +79,9 @@ internal object SystemWindowInsetsEnforcer {
         viewPager2: ViewPager2,
         windowInsets: WindowInsetsCompat
     ) {
-        val resources = viewPager2.context?.resources
         val systemBarsTypeMask = WindowInsetsCompat.Type.systemBars()
-        val systemBarsInsets = windowInsets
-            .getInsets(systemBarsTypeMask)
-            .`if`(Insets::isZeroed) {
-                Insets(top = SystemBarDimensionGetter.getStatusBar(resources).value) +
-                    getNavigationBarInsets(resources)
-            }
+        val systemBarsInsets =
+            windowInsets.getInsets(systemBarsTypeMask).orFallback(viewPager2.resources)
         val viewSize = ViewGroup.LayoutParams.MATCH_PARENT
         val overlaps = Overlap.from(systemBarsInsets, viewPager2)
         viewPager2.layoutParams = layoutParamsOf<T>(viewSize).apply {
@@ -96,7 +91,18 @@ internal object SystemWindowInsetsEnforcer {
         }
     }
 
-    private fun getNavigationBarInsets(resources: Resources?): Insets {
+    private fun Insets.orFallback(resources: Resources?): Insets {
+        return `if`(Insets::isZeroed) {
+            getFallbackStatusBarInsets(resources) + getFallbackNavigationBarInsets(resources)
+        }
+    }
+
+    private fun getFallbackStatusBarInsets(resources: Resources?): Insets {
+        val dimension = SystemBarDimensionGetter.getStatusBar(resources)
+        return Insets(top = dimension.value)
+    }
+
+    private fun getFallbackNavigationBarInsets(resources: Resources?): Insets {
         return when (val dimension = SystemBarDimensionGetter.getNavigationBar(resources)) {
             is SystemBarDimension.Width -> Insets(left = dimension.value)
             is SystemBarDimension.Height -> Insets(bottom = dimension.value)

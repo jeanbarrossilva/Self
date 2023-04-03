@@ -1,5 +1,6 @@
 package com.jeanbarrossilva.self.feature.questionnaire.utils
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import com.jeanbarrossilva.self.feature.questionnaire.utils.insets.SystemWindowInsetsEnforcer
@@ -10,8 +11,22 @@ internal fun ViewPager2.doOnPageSelected(block: (position: Int) -> Unit) {
             block(position)
         }
     }
-    registerOnPageChangeCallback(callback)
-    doOnDetach { unregisterOnPageChangeCallback(callback) }
+    if (isAttachedToWindow) {
+        registerOnPageChangeCallback(callback)
+        doOnDetach { unregisterOnPageChangeCallback(callback) }
+    } else {
+        addOnAttachStateChangeListener(
+            object : View.OnAttachStateChangeListener {
+                override fun onViewAttachedToWindow(v: View) {
+                    registerOnPageChangeCallback(callback)
+                }
+
+                override fun onViewDetachedFromWindow(v: View) {
+                    unregisterOnPageChangeCallback(callback)
+                }
+            }
+        )
+    }
 }
 
 internal inline fun <reified T : ViewGroup.MarginLayoutParams> ViewPager2.enforceSystemWindowInsets() { // ktlint-disable max-line-length

@@ -1,5 +1,6 @@
 package com.jeanbarrossilva.self.feature.wheel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 internal class WheelViewModel(
@@ -23,9 +25,19 @@ internal class WheelViewModel(
     private val editor: WheelEditor
 ) : ViewModel() {
     val wheelFlow = flow { emitAll(repository.fetch()) }
+        .onEach { Log.d("WheelViewModel", "wheelFlow: $it") }
         .map(List<Wheel>::firstOrNull)
         .map { it?.feature() }
         .loadable()
+
+    fun doOnNonexistentWheel(block: () -> Unit) {
+        viewModelScope.launch {
+            val isWheelNonexistent = wheelFlow.unwrap().first() == null
+            if (isWheelNonexistent) {
+                block()
+            }
+        }
+    }
 
     fun toggleToDo(area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) {
         viewModelScope.launch {

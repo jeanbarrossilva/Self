@@ -33,7 +33,6 @@ internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.registerWheel()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

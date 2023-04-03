@@ -29,7 +29,10 @@ internal fun Chart(wheel: FeatureWheel, modifier: Modifier = Modifier) {
         ),
         bottomAxis = bottomAxis(
             axisLabelComponent(typeface = typefaceResource(R.font.dm_sans_bold)),
-            valueFormatter = { index, _ -> wheel.areas[index.toInt()].name }
+            valueFormatter = { index, _ ->
+                val indexAsInt = index.toInt()
+                wheel.areas.elementAtOrNull(indexAsInt)?.name.orEmpty()
+            }
         )
     )
 }
