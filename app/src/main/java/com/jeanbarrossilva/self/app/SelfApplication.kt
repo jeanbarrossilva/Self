@@ -3,7 +3,6 @@ package com.jeanbarrossilva.self.app
 import android.app.Application
 import com.jeanbarrossilva.self.app.module.BoundaryModule
 import com.jeanbarrossilva.self.app.module.CoreModule
-import com.jeanbarrossilva.self.feature.questionnaire.QuestionnaireModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -17,7 +16,6 @@ internal class SelfApplication : Application() {
         startKoin {
             androidContext(this@SelfApplication)
             modules(CoreModule(), BoundaryModule())
-            modules(QuestionnaireModule())
         }
     }
 }

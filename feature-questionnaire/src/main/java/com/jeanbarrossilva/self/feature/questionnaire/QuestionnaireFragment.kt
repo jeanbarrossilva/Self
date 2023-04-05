@@ -3,6 +3,7 @@ package com.jeanbarrossilva.self.feature.questionnaire
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,15 +17,13 @@ import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRegister
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBinding>() {
     private val register by inject<WheelRegister>()
     private val editor by inject<WheelEditor>()
     private val boundary by inject<QuestionnaireBoundary>()
-    private val viewModel by viewModel<QuestionnaireViewModel> {
-        parametersOf(requireActivity().application, register, editor)
+    private val viewModel by viewModels<QuestionnaireViewModel> {
+        QuestionnaireViewModel.createFactory(requireActivity().application, register, editor)
     }
 
     override val bindingClass = FragmentQuestionnaireBinding::class

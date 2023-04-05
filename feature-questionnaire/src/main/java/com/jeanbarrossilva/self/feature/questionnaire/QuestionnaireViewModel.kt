@@ -3,7 +3,9 @@ package com.jeanbarrossilva.self.feature.questionnaire
 import android.app.Application
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention
 import com.jeanbarrossilva.self.platform.ui.utils.preferences
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
@@ -46,5 +48,14 @@ internal class QuestionnaireViewModel(
     companion object {
         private const val WHEEL_NAME = "Roda da vida"
         private const val IS_QUESTIONNAIRE_ANSWERED_KEY = "is_questionnaire_answered"
+
+        fun createFactory(application: Application, register: WheelRegister, editor: WheelEditor):
+            ViewModelProvider.Factory {
+            return viewModelFactory {
+                addInitializer(QuestionnaireViewModel::class) {
+                    QuestionnaireViewModel(application, register, editor)
+                }
+            }
+        }
     }
 }
