@@ -51,4 +51,5 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(Libraries.AURELIUS)
     implementation(Libraries.COMPOSE_COLLAPSING_TOOLBAR)
+    implementation(Libraries.PREFERENCE)
 }

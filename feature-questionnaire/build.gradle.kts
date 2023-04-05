@@ -57,7 +57,6 @@ dependencies {
     implementation(Libraries.COMPOSE_FOUNDATION)
     implementation(Libraries.KOIN)
     implementation(Libraries.NAVIGATION_FRAGMENT)
-    implementation(Libraries.PREFERENCE)
     implementation(Libraries.VIEWPAGER2)
 
     testImplementation(Libraries.JUNIT)

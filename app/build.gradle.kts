@@ -45,5 +45,4 @@ dependencies {
     implementation(Libraries.KOIN)
     implementation(Libraries.NAVIGATION_FRAGMENT)
     implementation(Libraries.NAVIGATION_UI)
-    implementation(Libraries.PREFERENCE)
 }

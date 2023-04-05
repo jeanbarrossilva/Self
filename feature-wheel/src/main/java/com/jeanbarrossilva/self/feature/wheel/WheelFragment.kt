@@ -16,7 +16,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
     private val repository by inject<WheelRepository>()
     private val editor by inject<WheelEditor>()
     private val viewModel by viewModels<WheelViewModel> {
-        WheelViewModel.createFactory(repository, editor)
+        WheelViewModel.createFactory(activity?.application!!, repository, editor)
     }
     private val boundary by inject<WheelBoundary>()
 
@@ -24,7 +24,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.doOnNonexistentWheel(::navigateToQuestionnaire)
+        navigateToQuestionnaireIfUnanswered()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,6 +32,12 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
             SelfTheme {
                 Wheel(viewModel, onEdit = ::edit)
             }
+        }
+    }
+
+    private fun navigateToQuestionnaireIfUnanswered() {
+        if (!viewModel.isQuestionnaireAnswered) {
+            navigateToQuestionnaire()
         }
     }
 

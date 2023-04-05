@@ -54,5 +54,6 @@ dependencies {
     implementation(Libraries.KOIN)
     implementation(Libraries.LOADABLE)
     implementation(Libraries.NAVIGATION_FRAGMENT)
+    implementation(Libraries.PREFERENCE)
     implementation(Libraries.VICO)
 }
