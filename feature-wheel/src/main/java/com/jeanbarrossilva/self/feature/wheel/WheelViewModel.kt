@@ -18,6 +18,7 @@ import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 internal class WheelViewModel(
@@ -41,7 +42,7 @@ internal class WheelViewModel(
 
     fun doOnNonexistentWheel(block: () -> Unit) {
         viewModelScope.launch {
-            wheelFlow.filterIsLoaded().collect {
+            wheelFlow.filterIsLoaded().take(1).collect {
                 if (wheel == null) {
                     block()
                 }
