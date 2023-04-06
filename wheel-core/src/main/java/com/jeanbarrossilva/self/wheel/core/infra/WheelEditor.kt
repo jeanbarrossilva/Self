@@ -4,7 +4,6 @@ import com.jeanbarrossilva.self.wheel.core.domain.Area
 import com.jeanbarrossilva.self.wheel.core.domain.ToDo
 import com.jeanbarrossilva.self.wheel.core.domain.Wheel
 import com.jeanbarrossilva.self.wheel.core.utils.get
-import kotlinx.coroutines.flow.first
 
 abstract class WheelEditor {
     protected abstract val repository: WheelRepository
@@ -54,6 +53,6 @@ abstract class WheelEditor {
     }
 
     private suspend fun getWheel(name: String): Wheel? {
-        return repository.fetch().first()[name]
+        return repository.fetch().value[name]
     }
 }

@@ -12,7 +12,6 @@ object Versions {
     const val KOTLINX_COROUTINES = "1.6.4"
     const val LOADABLE = "1.0.0"
     const val NAVIGATION = "2.5.3"
-    const val PREFERENCE = "1.2.0"
     const val ROOM = "2.5.1"
     const val TURBINE = "0.12.1"
     const val VICO = "1.6.4"

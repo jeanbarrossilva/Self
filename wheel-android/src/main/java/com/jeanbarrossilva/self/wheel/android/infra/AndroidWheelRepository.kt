@@ -5,15 +5,18 @@ import com.jeanbarrossilva.self.wheel.android.domain.todo.AndroidToDoDao
 import com.jeanbarrossilva.self.wheel.android.domain.wheel.AndroidWheelDao
 import com.jeanbarrossilva.self.wheel.core.domain.Wheel
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRepository
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 
 class AndroidWheelRepository(
     private val wheelDao: AndroidWheelDao,
     private val areaDao: AndroidAreaDao,
-    private val toDoDao: AndroidToDoDao
+    private val toDoDao: AndroidToDoDao,
+    private val coroutineScope: CoroutineScope
 ) : WheelRepository() {
-    override suspend fun fetch(): Flow<List<Wheel>> {
+    override suspend fun fetch(): StateFlow<List<Wheel>> {
         return combine(
             wheelDao.selectAll(),
             areaDao.selectAll(),
@@ -26,5 +29,6 @@ class AndroidWheelRepository(
                 )
             }
         }
+            .stateIn(coroutineScope)
     }
 }

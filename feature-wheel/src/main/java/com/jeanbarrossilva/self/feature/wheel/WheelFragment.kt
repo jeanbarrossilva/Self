@@ -24,7 +24,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        navigateToQuestionnaireIfUnanswered()
+        viewModel.doOnNonexistentWheel(::navigateToQuestionnaire)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,12 +32,6 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
             SelfTheme {
                 Wheel(viewModel, onEdit = ::edit)
             }
-        }
-    }
-
-    private fun navigateToQuestionnaireIfUnanswered() {
-        if (!viewModel.isQuestionnaireAnswered) {
-            navigateToQuestionnaire()
         }
     }
 
