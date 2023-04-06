@@ -1,4 +1,6 @@
 object Libraries {
+    const val ACCOMPANIST_PLACEHOLDER_MATERIAL =
+        "com.google.accompanist:accompanist-placeholder-material:${Versions.ACCOMPANIST}"
     const val AURELIUS = "com.jeanbarrossilva.aurelius:aurelius-android:${Versions.AURELIUS}"
     const val COMPOSE_COLLAPSING_TOOLBAR =
         "me.onebone:toolbar-compose:${Versions.COMPOSE_COLLAPSING_TOOLBAR}"

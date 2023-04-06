@@ -50,6 +50,7 @@ android {
 dependencies {
     implementation(project(":platform-ui"))
     implementation(project(":wheel-core"))
+    implementation(Libraries.ACCOMPANIST_PLACEHOLDER_MATERIAL)
     implementation(Libraries.AURELIUS)
     implementation(Libraries.KOIN)
     implementation(Libraries.LOADABLE)

@@ -1,9 +1,10 @@
 import org.gradle.api.JavaVersion
 
 object Versions {
+    const val ACCOMPANIST = "0.31.0-alpha"
     const val AURELIUS = "1.7.0"
     const val COMPOSE_COLLAPSING_TOOLBAR = "2.3.5"
-    const val COMPOSE_COMPILER = "1.4.3"
+    const val COMPOSE_COMPILER = "1.4.4"
     const val COMPOSE_FOUNDATION = "1.4.0"
     const val GRADLE = "7.4.2"
     const val JUNIT = "4.13.2"
