@@ -7,3 +7,6 @@ import com.jeanbarrossilva.self.platform.ui.R
 
 val @receiver:Suppress("Unused") Colors.elevated
     @Composable get() = colorResource(R.color.platform_ui_elevated)
+
+val Colors.placeholder
+    @Composable get() = container.secondary

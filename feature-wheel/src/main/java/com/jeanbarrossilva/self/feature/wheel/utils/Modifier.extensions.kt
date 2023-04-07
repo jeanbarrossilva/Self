@@ -1,6 +1,5 @@
 package com.jeanbarrossilva.self.feature.wheel.utils
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -11,6 +10,7 @@ import com.google.accompanist.placeholder.material.shimmer
 import com.jeanbarrossilva.aurelius.utils.`if`
 import com.jeanbarrossilva.self.feature.wheel.utils.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
+import com.jeanbarrossilva.self.platform.ui.utils.placeholder
 
 fun Modifier.`if`(
     condition: @Composable Modifier.() -> Boolean,
@@ -24,7 +24,7 @@ fun Modifier.`if`(
 
 fun Modifier.placeholder(size: PlaceholderSize, isVisible: Boolean): Modifier {
     return composed {
-        placeholder(size, MaterialTheme.shapes.small, isVisible)
+        placeholder(size, SelfTheme.shapes.medium, isVisible)
     }
 }
 
@@ -33,7 +33,7 @@ fun Modifier.placeholder(size: PlaceholderSize, shape: Shape, isVisible: Boolean
     return composed {
         placeholder(
             isVisible,
-            SelfTheme.colors.text.default,
+            SelfTheme.colors.placeholder,
             shape,
             PlaceholderHighlight.shimmer()
         )

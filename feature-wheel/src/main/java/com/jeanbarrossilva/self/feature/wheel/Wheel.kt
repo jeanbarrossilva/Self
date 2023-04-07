@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.scaffold.FloatingActionButton
 import com.jeanbarrossilva.aurelius.ui.layout.scaffold.Scaffold
+import com.jeanbarrossilva.aurelius.utils.`if`
 import com.jeanbarrossilva.aurelius.utils.plus
 import com.jeanbarrossilva.loadable.Loadable
 import com.jeanbarrossilva.loadable.utils.collectAsState
@@ -45,6 +46,7 @@ internal fun Wheel(
     onEdit: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val isFabVisible = loadable is Loadable.Loaded
     val title = remember(loadable) { loadable.map(FeatureWheel::name).valueOrNull.orEmpty() }
     val toDosLoadable = remember(loadable) {
         loadable.map { wheel ->
@@ -55,7 +57,7 @@ internal fun Wheel(
     Scaffold(
         modifier,
         floatingActionButton = {
-            FloatingActionButton(onClick = onEdit, isVisible = loadable is Loadable.Loaded) {
+            FloatingActionButton(onClick = onEdit, isVisible = isFabVisible) {
                 @Suppress("SpellCheckingInspection")
                 Icon(Icons.Rounded.Edit, contentDescription = "Editar")
             }
@@ -73,8 +75,9 @@ internal fun Wheel(
         }) {
             Background {
                 LazyColumn(
-                    contentPadding = PaddingValues(SelfTheme.sizes.spacing.large) +
-                        SelfTheme.sizes.margin.navigationBar + SelfTheme.sizes.margin.fab,
+                    contentPadding = PaddingValues(SelfTheme.sizes.spacing.large)
+                        .plus(SelfTheme.sizes.margin.navigationBar)
+                        .`if`(isFabVisible) { plus(SelfTheme.sizes.margin.fab) },
                     verticalArrangement = Arrangement.spacedBy(SelfTheme.sizes.spacing.huge)
                 ) {
                     item {

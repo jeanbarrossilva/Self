@@ -18,6 +18,7 @@ import com.jeanbarrossilva.self.feature.wheel.utils.entryModelOf
 import com.jeanbarrossilva.self.feature.wheel.utils.typefaceResource
 import com.jeanbarrossilva.self.platform.ui.still.Container
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
+import com.jeanbarrossilva.self.platform.ui.utils.placeholder
 import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
@@ -39,10 +40,13 @@ internal fun Chart(wheelLoadable: Loadable<FeatureWheel>, modifier: Modifier = M
 private fun BoxScope.LoadingChart(modifier: Modifier = Modifier) {
     Box(
         modifier
-            .height(160.dp)
+            .height(164.dp)
             .fillMaxWidth()
     ) {
-        CircularProgressIndicator(with(this@LoadingChart) { Modifier.align(Alignment.Center) })
+        CircularProgressIndicator(
+            with(this@LoadingChart) { Modifier.align(Alignment.Center) },
+            color = SelfTheme.colors.placeholder
+        )
     }
 }
 

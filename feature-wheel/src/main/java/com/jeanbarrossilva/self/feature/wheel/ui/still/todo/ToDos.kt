@@ -38,7 +38,7 @@ fun ToDos(
 
 @Composable
 private fun @Suppress("Unused") ColumnScope.LoadingTitledToDos() {
-    repeat(8) {
+    repeat(16) {
         TitledToDosColumn {
             Box(
                 Modifier.placeholder(
