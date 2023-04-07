@@ -20,7 +20,6 @@ import com.jeanbarrossilva.loadable.Loadable
 import com.jeanbarrossilva.loadable.utils.ifLoaded
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
-import com.jeanbarrossilva.self.feature.wheel.utils.isLoading
 import com.jeanbarrossilva.self.feature.wheel.utils.placeholder
 import com.jeanbarrossilva.self.feature.wheel.utils.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
@@ -48,7 +47,7 @@ internal fun ToDo(
 
         Text(
             loadable.ifLoaded(FeatureToDo::title).orEmpty(),
-            Modifier.placeholder(PlaceholderSize.Text(), isVisible = loadable.isLoading()),
+            Modifier.placeholder(PlaceholderSize.Text(), isVisible = loadable is Loadable.Loading),
             textDecoration = textDecoration
         )
     }

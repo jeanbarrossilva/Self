@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
@@ -44,6 +45,13 @@ internal fun Wheel(
     onEdit: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val title = remember(loadable) { loadable.map(FeatureWheel::name).valueOrNull.orEmpty() }
+    val toDosLoadable = remember(loadable) {
+        loadable.map { wheel ->
+            wheel.areas.serialize()
+        }
+    }
+
     Scaffold(
         modifier,
         floatingActionButton = {
@@ -55,7 +63,7 @@ internal fun Wheel(
     ) {
         TopAppBar({ modifier, style ->
             Text(
-                loadable.map(FeatureWheel::name).valueOrNull.orEmpty(),
+                title,
                 modifier.placeholder(
                     PlaceholderSize.Text({ style }),
                     isVisible = loadable is Loadable.Loading
@@ -74,7 +82,7 @@ internal fun Wheel(
                     }
 
                     item {
-                        ToDos(loadable.map { wheel -> wheel.areas.serialize() }, onToDoToggle)
+                        ToDos(toDosLoadable, onToDoToggle)
                     }
                 }
             }

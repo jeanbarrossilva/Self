@@ -23,14 +23,14 @@ import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
 fun ToDos(
-    areasLoadable: Loadable<SerializableList<FeatureArea>>,
+    loadable: Loadable<SerializableList<FeatureArea>>,
     onToggle: (area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier.fillMaxWidth(), Arrangement.spacedBy(SelfTheme.sizes.spacing.huge)) {
-        when (areasLoadable) {
+        when (loadable) {
             is Loadable.Loading -> LoadingTitledToDos()
-            is Loadable.Loaded -> LoadedTitledToDos(areasLoadable.value, onToggle)
+            is Loadable.Loaded -> LoadedTitledToDos(loadable.value, onToggle)
             is Loadable.Failed -> { }
         }
     }
