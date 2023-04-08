@@ -21,7 +21,7 @@ import com.jeanbarrossilva.loadable.utils.ifLoaded
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
 import com.jeanbarrossilva.self.feature.wheel.utils.placeholder
-import com.jeanbarrossilva.self.feature.wheel.utils.placeholder.PlaceholderSize
+import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable

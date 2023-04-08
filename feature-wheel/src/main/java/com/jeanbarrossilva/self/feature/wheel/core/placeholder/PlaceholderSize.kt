@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.wheel.utils.placeholder
+package com.jeanbarrossilva.self.feature.wheel.core.placeholder
 
 import androidx.annotation.FloatRange
 import androidx.compose.foundation.layout.height

@@ -8,7 +8,7 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import com.jeanbarrossilva.aurelius.utils.`if`
-import com.jeanbarrossilva.self.feature.wheel.utils.placeholder.PlaceholderSize
+import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.platform.ui.utils.placeholder
 
