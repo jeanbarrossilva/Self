@@ -15,7 +15,7 @@ internal sealed interface LoadableList<T : Serializable?> {
     data class Populated<T : Serializable?>(val value: SerializableList<T>) : LoadableList<T> {
         init {
             assert(value.isNotEmpty()) {
-                "ListLoadable.Loaded cannot hold an empty list; use Empty instead."
+                "LoadableList.Populated cannot hold an empty list; use LoadableList.Empty instead."
             }
         }
 
