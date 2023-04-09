@@ -1,10 +1,12 @@
 package com.jeanbarrossilva.self.feature.wheel.scope.todo
 
+import android.content.DialogInterface
 import androidx.compose.runtime.Composable
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.platform.ui.core.sheet.SheetFragment
+import com.jeanbarrossilva.self.platform.ui.utils.imeController
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import org.koin.android.ext.android.inject
 
@@ -17,6 +19,11 @@ internal class ToDoComposerFragment() : SheetFragment() {
 
     constructor(areas: List<FeatureArea>) : this() {
         this.areas = areas
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        imeController?.close()
     }
 
     @Composable

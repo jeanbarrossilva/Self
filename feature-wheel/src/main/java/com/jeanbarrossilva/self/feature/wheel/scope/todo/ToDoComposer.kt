@@ -28,7 +28,6 @@ import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.dropdown.Dropd
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextField
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextFieldState
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextFieldValidator
-import com.jeanbarrossilva.self.platform.ui.core.ime.local.LocalImeController
 import com.jeanbarrossilva.self.platform.ui.core.sheet.Sheet
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
@@ -60,7 +59,6 @@ internal fun ToDoComposer(
     onComposition: (area: FeatureArea) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val imeController = LocalImeController.current
     val nameFieldFocusRequester = remember(::FocusRequester)
     var nameFieldState by remember { mutableStateOf<TextFieldState>(TextFieldState.Idle) }
     val nameFieldValidator = remember {
@@ -145,7 +143,6 @@ internal fun ToDoComposer(
                     ) {
                         selectedArea?.let {
                             nameFieldFocusRequester.freeFocus()
-                            imeController.close()
                             onComposition(it)
                         }
                     }
