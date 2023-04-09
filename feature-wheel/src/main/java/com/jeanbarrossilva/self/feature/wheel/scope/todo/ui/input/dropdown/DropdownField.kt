@@ -22,15 +22,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.onPlaced
-import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
 import com.jeanbarrossilva.aurelius.utils.toDpSize
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextField
@@ -39,6 +42,7 @@ import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextField
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextFieldValidator
 import com.jeanbarrossilva.self.feature.wheel.utils.LocalColorScheme
 import com.jeanbarrossilva.self.feature.wheel.utils.LocalShapes
+import com.jeanbarrossilva.self.feature.wheel.utils.animateDpOffsetAsState
 import com.jeanbarrossilva.self.feature.wheel.utils.toDpOffset
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
@@ -55,13 +59,30 @@ internal fun DropdownField(
     content: @Composable ColumnScope.(width: Dp) -> Unit
 ) {
     val density = LocalDensity.current
-    var offset by remember { mutableStateOf(DpOffset.Unspecified) }
+    var top by remember { mutableStateOf(Dp.Unspecified) }
     var size by remember { mutableStateOf(DpSize.Unspecified) }
     val indicatorContentDescription = remember(isExpanded) {
         @Suppress("SpellCheckingInspection")
         if (isExpanded) "Colapsar" else "Expandir"
     }
     val indicatorRotationDegrees by animateFloatAsState(if (isExpanded) -180f else 0f)
+    val menuOffset by animateDpOffsetAsState(
+        if (top.isSpecified && size.isSpecified) {
+            DpOffset(
+                x = LocalContext
+                    .current
+                    .resources
+                    .configuration
+                    .screenWidthDp
+                    .dp
+                    .div(2)
+                    .div(size.width / 2.dp),
+                y = top + size.height
+            )
+        } else {
+            DpOffset.Zero
+        }
+    )
 
     Box {
         TextField(
@@ -69,11 +90,10 @@ internal fun DropdownField(
             onValueChange = { },
             modifier
                 .onPlaced {
-                    offset = it
-                        .positionInParent()
-                        .toDpOffset(density)
+                    top = it.positionInRoot().toDpOffset(density).y
                     size = it.size.toDpSize(density)
                 }
+                .clip(TextFieldDefaults.shape)
                 .clickable(role = Role.DropdownList) { onExpansionToggle(true) }
                 .fillMaxWidth(),
             validator,
@@ -100,11 +120,7 @@ internal fun DropdownField(
                 isExpanded,
                 onDismissRequest = { onExpansionToggle(false) },
                 Modifier.background(TextFieldDefaults.containerColor),
-                offset = if (offset.isSpecified) {
-                    with(offset) { copy(y = y + size.height) }
-                } else {
-                    DpOffset.Zero
-                }
+                menuOffset
             ) {
                 if (size.width.isSpecified) {
                     // This is more of a convenience for external consumers of the DropdownField
