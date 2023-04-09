@@ -12,7 +12,13 @@ import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.platform.ui.utils.placeholder
 
-fun Modifier.`if`(
+internal fun Modifier.`if`(condition: Boolean, update: @Composable Modifier.() -> Modifier):
+    Modifier {
+    @Suppress("UnnecessaryComposedModifier")
+    return if (condition) composed { update() } else this
+}
+
+internal fun Modifier.`if`(
     condition: @Composable Modifier.() -> Boolean,
     update: @Composable Modifier.() -> Modifier
 ): Modifier {
@@ -22,13 +28,13 @@ fun Modifier.`if`(
     }
 }
 
-fun Modifier.placeholder(size: PlaceholderSize, isVisible: Boolean): Modifier {
+internal fun Modifier.placeholder(size: PlaceholderSize, isVisible: Boolean): Modifier {
     return composed {
         placeholder(size, SelfTheme.shapes.medium, isVisible)
     }
 }
 
-fun Modifier.placeholder(size: PlaceholderSize, shape: Shape, isVisible: Boolean):
+internal fun Modifier.placeholder(size: PlaceholderSize, shape: Shape, isVisible: Boolean):
     Modifier {
     return composed {
         placeholder(

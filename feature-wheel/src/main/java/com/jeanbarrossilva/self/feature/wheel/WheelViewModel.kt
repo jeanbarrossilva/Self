@@ -42,7 +42,7 @@ internal class WheelViewModel(
             }
         }
 
-    private val wheel
+    val wheel
         get() = wheelLoadableFlow.value.valueOrNull
 
     fun getWheelLoadableFlow(): StateFlow<Loadable<FeatureWheel>> {

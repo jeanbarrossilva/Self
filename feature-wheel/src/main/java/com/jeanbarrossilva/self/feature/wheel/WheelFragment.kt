@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.jeanbarrossilva.self.feature.wheel.databinding.FragmentWheelBinding
-import com.jeanbarrossilva.self.feature.wheel.scope.editingsheet.EditingSheetFragment
+import com.jeanbarrossilva.self.feature.wheel.scope.todo.ToDoComposerFragment
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
@@ -30,7 +30,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.root?.setContent {
             SelfTheme {
-                Wheel(viewModel, onEdit = ::edit)
+                Wheel(viewModel, onAddToDo = ::navigateToToDoComposer)
             }
         }
     }
@@ -40,7 +40,11 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
         boundary.navigateToQuestionnaire(navController)
     }
 
-    private fun edit() {
-        activity?.let(EditingSheetFragment::show)
+    private fun navigateToToDoComposer() {
+        val activity = activity
+        val wheel = viewModel.wheel
+        if (activity != null && wheel != null) {
+            ToDoComposerFragment.show(activity, wheel.areas)
+        }
     }
 }

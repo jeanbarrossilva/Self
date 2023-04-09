@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -28,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.scaffold.FloatingActionButton
-import com.jeanbarrossilva.aurelius.ui.layout.scaffold.Scaffold
 import com.jeanbarrossilva.aurelius.utils.`if`
 import com.jeanbarrossilva.aurelius.utils.plus
 import com.jeanbarrossilva.aurelius.utils.toDp
@@ -53,12 +54,17 @@ import com.jeanbarrossilva.self.platform.ui.layout.scaffold.TopAppBar
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
-internal fun Wheel(viewModel: WheelViewModel, onEdit: () -> Unit, modifier: Modifier = Modifier) {
+internal fun Wheel(
+    viewModel: WheelViewModel,
+    onAddToDo: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val loadable by viewModel.getWheelLoadableFlow().collectAsState()
-    Wheel(loadable, onToDoToggle = viewModel::toggleToDo, onEdit, modifier)
+    Wheel(loadable, onToDoToggle = viewModel::toggleToDo, onAddToDo, modifier)
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 internal fun Wheel(
     loadable: Loadable<FeatureWheel>,
     onToDoToggle: (area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) -> Unit,
@@ -107,7 +113,7 @@ internal fun Wheel(
         floatingActionButton = {
             FloatingActionButton(onClick = onEdit, isVisible = isFabVisible) {
                 @Suppress("SpellCheckingInspection")
-                Icon(Icons.Rounded.Edit, contentDescription = "Editar")
+                Icon(Icons.Rounded.Add, contentDescription = "Adicionar afazer")
             }
         }
     ) {
@@ -125,7 +131,8 @@ internal fun Wheel(
                 LazyColumn(
                     Modifier.fillMaxSize(),
                     lazyColumnState,
-                    contentPadding = PaddingValues(SelfTheme.sizes.spacing.large)
+                    contentPadding = it
+                        .plus(PaddingValues(SelfTheme.sizes.spacing.large))
                         .plus(navigationBarMargin)
                         .`if`(isFabVisible) { plus(fabMargin) },
                     verticalArrangement = Arrangement.spacedBy(SelfTheme.sizes.spacing.huge)

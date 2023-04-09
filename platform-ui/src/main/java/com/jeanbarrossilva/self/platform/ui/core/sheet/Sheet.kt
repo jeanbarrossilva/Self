@@ -1,24 +1,53 @@
-package com.jeanbarrossilva.self.platform.ui.sheet
+package com.jeanbarrossilva.self.platform.ui.core.sheet
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jeanbarrossilva.self.platform.ui.sheet.Tongue
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.platform.ui.utils.elevated
 import com.jeanbarrossilva.self.platform.ui.utils.top
+
+@Composable
+fun Sheet(
+    title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Sheet(modifier) {
+        LazyColumn(
+            Modifier.fillMaxWidth(),
+            contentPadding = it,
+            verticalArrangement = Arrangement.spacedBy(SelfTheme.sizes.spacing.large)
+        ) {
+            item {
+                ProvideTextStyle(
+                    SelfTheme.text.title.large.copy(SelfTheme.colors.text.highlighted),
+                    title
+                )
+            }
+
+            item {
+                content()
+            }
+        }
+    }
+}
 
 @Composable
 fun Sheet(
@@ -48,7 +77,7 @@ fun Sheet(
                 disabledElevation = 0.dp
             )
         ) {
-            content(PaddingValues(SelfTheme.sizes.spacing.huge))
+            content(SheetDefaults.padding)
         }
     }
 }
@@ -56,16 +85,28 @@ fun Sheet(
 @Composable
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun SheetPreview() {
+private fun UntitledSheetPreview() {
     SelfTheme {
         Sheet {
-            Text(
-                "Content",
-                Modifier
-                    .padding(it)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
+            @Suppress("SpellCheckingInspection")
+            Text("Conteúdo", Modifier.padding(it))
+        }
+    }
+}
+
+@Composable
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+private fun TitledSheetPreview() {
+    SelfTheme {
+        Sheet(
+            title = {
+                @Suppress("SpellCheckingInspection")
+                Text("Título")
+            }
+        ) {
+            @Suppress("SpellCheckingInspection")
+            Text("Conteúdo")
         }
     }
 }

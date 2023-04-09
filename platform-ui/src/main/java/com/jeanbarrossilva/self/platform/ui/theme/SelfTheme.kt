@@ -20,7 +20,7 @@ fun SelfTheme(content: @Composable () -> Unit) {
         colors = Colors.default.copy(
             container = LayeredColorsDefaults.container.copy(
                 secondary = if (isSystemInDarkTheme()) Color(0xFF383838) else Color(0xFFF0F0F0),
-                tertiary = if (isSystemInDarkTheme()) Color(0xFF202020) else Color(0xFFE9E9E9)
+                tertiary = if (isSystemInDarkTheme()) Color(0xFF3C3C3C) else Color(0xFFF5F5F5)
             ),
             content = LayeredColorsDefaults.content.copy(
                 tertiary = if (isSystemInDarkTheme()) Color(0xFF9B9B9B) else Color(0xFFA0A0A0)

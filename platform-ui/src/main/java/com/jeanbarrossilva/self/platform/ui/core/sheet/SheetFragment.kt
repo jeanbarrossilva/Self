@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.wheel.scope.editingsheet
+package com.jeanbarrossilva.self.platform.ui.core.sheet
 
 import android.app.Dialog
 import android.os.Bundle
@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.fragment.app.FragmentActivity
+import androidx.compose.runtime.Composable
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.jeanbarrossilva.self.feature.wheel.databinding.FragmentEditingSheetBinding
 import com.jeanbarrossilva.self.platform.ui.R
+import com.jeanbarrossilva.self.platform.ui.databinding.FragmentSheetBinding
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
-internal class EditingSheetFragment : BottomSheetDialogFragment() {
-    private var binding: FragmentEditingSheetBinding? = null
+abstract class SheetFragment : BottomSheetDialogFragment() {
+    private var binding: FragmentSheetBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +34,14 @@ internal class EditingSheetFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEditingSheetBinding.inflate(inflater, container, false)
+        binding = FragmentSheetBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.root?.setContent {
             SelfTheme {
-                EditingSheet(onEditAreas = { }, onAddToDo = { })
+                Content()
             }
         }
     }
@@ -51,9 +51,6 @@ internal class EditingSheetFragment : BottomSheetDialogFragment() {
         binding = null
     }
 
-    companion object {
-        fun show(activity: FragmentActivity) {
-            EditingSheetFragment().show(activity.supportFragmentManager, "editing_fragment")
-        }
-    }
+    @Composable
+    protected abstract fun Content()
 }

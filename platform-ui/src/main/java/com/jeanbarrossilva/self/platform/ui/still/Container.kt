@@ -7,9 +7,13 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
@@ -18,11 +22,17 @@ import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.platform.ui.utils.elevated
 
 @Composable
-fun Container(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+fun Container(
+    modifier: Modifier = Modifier,
+    shape: Shape = SelfTheme.shapes.small,
+    containerColor: Color = SelfTheme.colors.elevated,
+    borderColor: Color = SelfTheme.colors.container.tertiary,
+    content: @Composable BoxScope.() -> Unit
+) {
     Card(
         modifier,
-        SelfTheme.shapes.small,
-        colors = CardDefaults.cardColors(containerColor = SelfTheme.colors.elevated),
+        shape,
+        colors = CardDefaults.cardColors(containerColor),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp,
             pressedElevation = 0.dp,
@@ -31,9 +41,15 @@ fun Container(modifier: Modifier = Modifier, content: @Composable BoxScope.() ->
             draggedElevation = 0.dp,
             disabledElevation = 0.dp
         ),
-        border = BorderStroke(1.dp, SelfTheme.colors.container.tertiary)
+        border = BorderStroke(1.dp, borderColor)
     ) {
-        Box(Modifier.padding(SelfTheme.sizes.spacing.medium), content = content)
+        Box(Modifier.padding(SelfTheme.sizes.spacing.medium)) {
+            CompositionLocalProvider(
+                LocalContentColor provides SelfTheme.colors.content.secondary
+            ) {
+                content()
+            }
+        }
     }
 }
 
