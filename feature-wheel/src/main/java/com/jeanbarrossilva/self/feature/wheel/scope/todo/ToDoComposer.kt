@@ -66,17 +66,9 @@ internal fun ToDoComposer(
         TextFieldValidator("O nome não pode estar vazio.", String::isNotBlank)
     }
     var isAreasDropdownFieldExpanded by remember { mutableStateOf(false) }
-    var selectedArea by remember(areas) { mutableStateOf(areas.firstOrNull()) }
-    val areaFieldValue = remember(selectedArea) { selectedArea?.name.orEmpty() }
-    var areaFieldState by remember { mutableStateOf<TextFieldState>(TextFieldState.Idle) }
-    val areaFieldValidator = remember {
-        @Suppress("SpellCheckingInspection")
-        TextFieldValidator("Selecione a área à qual o afazer deve ser adicionado.") {
-            selectedArea != null
-        }
-    }
-    val isValid = remember(nameFieldState, areaFieldState) {
-        nameFieldState !is TextFieldState.Invalid && areaFieldState !is TextFieldState.Invalid
+    var selectedArea by remember(areas) { mutableStateOf(areas.first()) }
+    val isButtonEnabled = remember(nameFieldState) {
+        nameFieldState !is TextFieldState.Invalid
     }
 
     LaunchedEffect(Unit) {
@@ -104,14 +96,11 @@ internal fun ToDoComposer(
             DropdownField(
                 isAreasDropdownFieldExpanded,
                 onExpansionToggle = { isAreasDropdownFieldExpanded = it },
-                areaFieldValue,
-                areaFieldState,
-                onStateChange = { areaFieldState = it },
+                text = selectedArea.name,
                 label = {
                     @Suppress("SpellCheckingInspection")
                     Text("Área")
-                },
-                validator = areaFieldValidator
+                }
             ) { width ->
                 areas.forEach { area ->
                     DropdownMenuItem(
@@ -136,24 +125,18 @@ internal fun ToDoComposer(
             PrimaryButton(
                 onClick = {
                     nameFieldState = nameFieldValidator.enable(name)
-                    areaFieldState = areaFieldValidator.enable(areaFieldValue)
-                    if (
-                        nameFieldState is TextFieldState.Valid &&
-                        areaFieldState is TextFieldState.Valid
-                    ) {
-                        selectedArea?.let {
-                            nameFieldFocusRequester.freeFocus()
-                            onComposition(it)
-                        }
+                    if (nameFieldState is TextFieldState.Valid) {
+                        nameFieldFocusRequester.freeFocus()
+                        onComposition(selectedArea)
                     }
                 },
                 Modifier.fillMaxWidth(),
-                isEnabled = isValid
+                isEnabled = isButtonEnabled
             ) {
                 @Suppress("SpellCheckingInspection")
                 Text(
                     "Adicionar",
-                    color = if (!isValid && isSystemInDarkTheme()) {
+                    color = if (!isButtonEnabled && isSystemInDarkTheme()) {
                         SelfTheme.colors.content.tertiary
                     } else {
                         SelfTheme.colors.content.primary

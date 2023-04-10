@@ -21,16 +21,16 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextFieldDefaults as _TextFieldDefaults
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
 internal fun TextField(
-    value: String,
-    onValueChange: (value: String) -> Unit,
+    text: String,
+    onTextChange: (text: String) -> Unit,
     modifier: Modifier = Modifier,
-    validator: TextFieldValidator? = null,
-    state: TextFieldState = TextFieldState.Idle,
+    validator: TextFieldValidator,
+    state: TextFieldState,
     onStateChange: (state: TextFieldState) -> Unit,
     isEnabled: Boolean = true,
     isReadOnly: Boolean = false,
@@ -40,40 +40,40 @@ internal fun TextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
     TextField(
-        value,
-        onValueChange = { changedValue ->
-            onValueChange(changedValue)
-            validator?.validate(changedValue)?.run(onStateChange)
+        text,
+        onTextChange = { changedValue ->
+            onTextChange(changedValue)
+            onStateChange(validator.validate(changedValue))
         },
         state,
+        keyboardOptions,
+        keyboardActions,
+        modifier,
         isEnabled,
         isReadOnly,
         label,
-        trailingIcon,
-        keyboardOptions,
-        keyboardActions,
-        modifier
+        trailingIcon
     )
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun TextField(
-    value: String,
-    onValueChange: (value: String) -> Unit,
+    text: String,
+    onTextChange: (text: String) -> Unit,
     state: TextFieldState,
-    isEnabled: Boolean,
-    isReadOnly: Boolean,
-    label: (@Composable () -> Unit)?,
-    trailingIcon: (@Composable () -> Unit)?,
     keyboardOptions: KeyboardOptions,
     keyboardActions: KeyboardActions,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isEnabled: Boolean = true,
+    isReadOnly: Boolean = false,
+    label: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(SelfTheme.sizes.spacing.small)) {
         TextField(
-            value,
-            onValueChange,
+            text,
+            onTextChange,
             modifier.fillMaxWidth(),
             isEnabled,
             isReadOnly,
@@ -133,18 +133,15 @@ private fun InvalidTextFieldPreview() {
 @Composable
 private fun TextField(state: TextFieldState, modifier: Modifier = Modifier) {
     TextField(
-        value = "",
-        onValueChange = { },
+        text = "",
+        onTextChange = { },
         state,
-        isEnabled = true,
-        isReadOnly = false,
+        KeyboardOptions.Default,
+        KeyboardActions.Default,
+        modifier,
         label = {
             @Suppress("SpellCheckingInspection")
             Text("Rótulo")
-        },
-        trailingIcon = null,
-        KeyboardOptions.Default,
-        KeyboardActions.Default,
-        modifier
+        }
     )
 }

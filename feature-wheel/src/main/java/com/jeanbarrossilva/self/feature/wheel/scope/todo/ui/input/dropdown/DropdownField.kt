@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
 import com.jeanbarrossilva.aurelius.utils.toDpSize
+import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.EmptyTextFieldValidator
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextField
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextFieldDefaults
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text.TextFieldState
@@ -49,12 +50,34 @@ import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 internal fun DropdownField(
     isExpanded: Boolean,
     onExpansionToggle: (isExpanded: Boolean) -> Unit,
-    value: String,
+    text: String,
+    label: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.(width: Dp) -> Unit
+) {
+    DropdownField(
+        isExpanded,
+        onExpansionToggle,
+        text,
+        EmptyTextFieldValidator(),
+        TextFieldState.Valid,
+        onStateChange = { },
+        label,
+        modifier,
+        content
+    )
+}
+
+@Composable
+internal fun DropdownField(
+    isExpanded: Boolean,
+    onExpansionToggle: (isExpanded: Boolean) -> Unit,
+    text: String,
+    validator: TextFieldValidator,
     state: TextFieldState,
     onStateChange: (state: TextFieldState) -> Unit,
-    label: (@Composable () -> Unit),
+    label: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    validator: TextFieldValidator? = null,
     content: @Composable ColumnScope.(width: Dp) -> Unit
 ) {
     val density = LocalDensity.current
@@ -86,8 +109,8 @@ internal fun DropdownField(
 
     Box {
         TextField(
-            value,
-            onValueChange = { },
+            text,
+            onTextChange = { },
             modifier
                 .onPlaced {
                     top = it.positionInRoot().toDpOffset(density).y
@@ -162,9 +185,7 @@ private fun DropdownField(isExpanded: Boolean, modifier: Modifier = Modifier) {
     DropdownField(
         isExpanded,
         onExpansionToggle = { },
-        value = "Texto",
-        TextFieldState.Idle,
-        onStateChange = { },
+        text = "Texto",
         label = { Text("Rótulo") },
         modifier
     ) { width ->

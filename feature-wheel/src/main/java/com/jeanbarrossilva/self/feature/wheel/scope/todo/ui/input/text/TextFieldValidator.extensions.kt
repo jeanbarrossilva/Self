@@ -1,6 +1,14 @@
 package com.jeanbarrossilva.self.feature.wheel.scope.todo.ui.input.text
 
-internal fun TextFieldValidator(message: String, onValidate: (value: String) -> Boolean): TextFieldValidator {
+@Suppress("FunctionName")
+internal fun EmptyTextFieldValidator(): TextFieldValidator {
+    return TextFieldValidator("") {
+        true
+    }
+}
+
+internal fun TextFieldValidator(message: String, onValidate: (value: String) -> Boolean):
+    TextFieldValidator {
     return object : TextFieldValidator() {
         override val message = message
 
