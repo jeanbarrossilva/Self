@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step
+package com.jeanbarrossilva.self.feature.questionnaire.step
 
 import android.os.Bundle
 import android.view.View

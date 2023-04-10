@@ -1,7 +1,7 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type
+package com.jeanbarrossilva.self.feature.questionnaire.step.answerable.type
 
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.AnswerableStepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.step.answerable.AnswerableStepFragment
 
 internal class StudiesFragment : AnswerableStepFragment {
     @Suppress("SpellCheckingInspection")

@@ -1,12 +1,12 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable
+package com.jeanbarrossilva.self.feature.questionnaire.step.answerable
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.FocusRequester
 import androidx.fragment.app.viewModels
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepPosition
 import com.jeanbarrossilva.self.feature.questionnaire.utils.tryToRequestFocus
 import com.jeanbarrossilva.self.platform.ui.utils.imeController
 

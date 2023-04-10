@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step
+package com.jeanbarrossilva.self.feature.questionnaire.step
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +25,7 @@ import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.background.BackgroundContentSizing
 import com.jeanbarrossilva.self.feature.questionnaire.core.attention.AttentionPercentageVisualTransformation
 import com.jeanbarrossilva.self.feature.questionnaire.infra.AttentionConverter
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answer.AnswerFieldValue
+import com.jeanbarrossilva.self.feature.questionnaire.step.answer.AnswerFieldValue
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.wheel.core.domain.Area
 

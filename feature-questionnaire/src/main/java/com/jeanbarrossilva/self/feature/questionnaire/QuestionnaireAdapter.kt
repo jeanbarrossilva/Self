@@ -2,15 +2,15 @@ package com.jeanbarrossilva.self.feature.questionnaire
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.AnswerableStepFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.FamilyFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.LeisureFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.StudiesFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable.type.WorkFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.UnanswerableStepFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.type.AnnouncementFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.step.answerable.AnswerableStepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.answerable.type.FamilyFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.answerable.type.LeisureFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.answerable.type.StudiesFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.answerable.type.WorkFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.unanswerable.UnanswerableStepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.unanswerable.type.AnnouncementFragment
 
 internal class QuestionnaireAdapter(
     fragment: QuestionnaireFragment,

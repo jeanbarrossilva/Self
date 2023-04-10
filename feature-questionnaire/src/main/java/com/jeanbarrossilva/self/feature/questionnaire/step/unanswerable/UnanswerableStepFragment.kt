@@ -1,9 +1,8 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable
+package com.jeanbarrossilva.self.feature.questionnaire.step.unanswerable
 
 import androidx.compose.runtime.Composable
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Step
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepFragment
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepPosition
 
 internal abstract class UnanswerableStepFragment : StepFragment {
     private var onNextListener: OnNextListener? = null
@@ -24,7 +23,7 @@ internal abstract class UnanswerableStepFragment : StepFragment {
 
     @Composable
     override fun Content() {
-        Step(
+        com.jeanbarrossilva.self.feature.questionnaire.step.Step(
             position,
             canProceed = true,
             title = { Title() },

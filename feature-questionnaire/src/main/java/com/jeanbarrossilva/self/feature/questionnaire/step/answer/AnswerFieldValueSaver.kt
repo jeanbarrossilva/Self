@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.answer
+package com.jeanbarrossilva.self.feature.questionnaire.step.answer
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope

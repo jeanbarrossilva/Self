@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable
+package com.jeanbarrossilva.self.feature.questionnaire.step.answerable
 
 import androidx.lifecycle.ViewModel
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention

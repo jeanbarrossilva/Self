@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.answer
+package com.jeanbarrossilva.self.feature.questionnaire.step.answer
 
 import androidx.compose.ui.text.TextRange
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention

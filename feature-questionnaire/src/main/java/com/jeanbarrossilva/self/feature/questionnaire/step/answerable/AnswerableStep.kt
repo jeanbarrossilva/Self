@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.answerable
+package com.jeanbarrossilva.self.feature.questionnaire.step.answerable
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.ColumnScope
@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.tooling.preview.Preview
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Answer
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.Step
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answer.AnswerFieldValue
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.answer.AnswerFieldValueSaver
+import com.jeanbarrossilva.self.feature.questionnaire.step.Answer
+import com.jeanbarrossilva.self.feature.questionnaire.step.Step
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.step.answer.AnswerFieldValue
+import com.jeanbarrossilva.self.feature.questionnaire.step.answer.AnswerFieldValueSaver
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable

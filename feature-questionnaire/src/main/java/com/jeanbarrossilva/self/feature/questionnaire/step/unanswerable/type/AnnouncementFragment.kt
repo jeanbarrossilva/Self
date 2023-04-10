@@ -1,9 +1,9 @@
-package com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.type
+package com.jeanbarrossilva.self.feature.questionnaire.step.unanswerable.type
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.StepPosition
-import com.jeanbarrossilva.self.feature.questionnaire.scope.step.unanswerable.UnanswerableStepFragment
+import com.jeanbarrossilva.self.feature.questionnaire.step.StepPosition
+import com.jeanbarrossilva.self.feature.questionnaire.step.unanswerable.UnanswerableStepFragment
 
 internal class AnnouncementFragment : UnanswerableStepFragment {
     constructor() : super()
