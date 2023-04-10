@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.platform.ui.sheet
+package com.jeanbarrossilva.self.platform.ui.core.sheet
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Canvas

@@ -37,10 +37,6 @@ internal abstract class StepFragment() : BindingFragment<FragmentStepBinding>() 
         onFocus()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     @Composable
     protected abstract fun Content()
 

@@ -56,6 +56,7 @@ internal fun NextButton(
             disabledContentColor = SelfTheme.colors.content.tertiary
         )
     ) {
+        @Suppress("SpellCheckingInspection")
         Icon(vector, contentDescription = "Prosseguir")
     }
 }

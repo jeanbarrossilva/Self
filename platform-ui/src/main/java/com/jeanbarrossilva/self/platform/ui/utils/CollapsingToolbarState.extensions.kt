@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.self.feature.wheel.utils
+package com.jeanbarrossilva.self.platform.ui.utils
 
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp

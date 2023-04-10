@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/aurelius_container_secondary" />
-    <corners android:radius="@dimen/aurelius_shapes_medium_size" />
-</shape>

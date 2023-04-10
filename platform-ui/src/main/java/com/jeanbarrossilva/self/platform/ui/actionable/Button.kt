@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.jeanbarrossilva.aurelius.ui.actionable.button.Button
-import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.platform.ui.actionable.Button as _Button
+import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
 @Composable
 fun Button(

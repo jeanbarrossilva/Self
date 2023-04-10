@@ -39,16 +39,4 @@ abstract class PlaceholderSize protected constructor() {
         override val height
             @Composable get() = with(density) { textStyle().fontSize.toDp() }
     }
-
-    companion object {
-        infix fun of(value: Dp): PlaceholderSize {
-            return object: PlaceholderSize() {
-                override val width
-                    @Composable get() = value
-
-                override val height
-                    @Composable get() = value
-            }
-        }
-    }
 }
