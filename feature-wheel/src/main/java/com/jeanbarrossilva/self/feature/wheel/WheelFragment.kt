@@ -30,7 +30,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.root?.setContent {
             SelfTheme {
-                Wheel(viewModel, onAddToDo = ::navigateToToDoComposer)
+                Wheel(viewModel, onToDoCompositionRequest = ::navigateToToDoComposer)
             }
         }
     }

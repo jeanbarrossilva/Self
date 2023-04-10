@@ -56,11 +56,11 @@ import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 @Composable
 internal fun Wheel(
     viewModel: WheelViewModel,
-    onAddToDo: () -> Unit,
+    onToDoCompositionRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val loadable by viewModel.getWheelLoadableFlow().collectAsState()
-    Wheel(loadable, onToDoToggle = viewModel::toggleToDo, onAddToDo, modifier)
+    Wheel(loadable, onToDoToggle = viewModel::toggleToDo, onToDoCompositionRequest, modifier)
 }
 
 @Composable
@@ -68,7 +68,7 @@ internal fun Wheel(
 internal fun Wheel(
     loadable: Loadable<FeatureWheel>,
     onToDoToggle: (area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) -> Unit,
-    onEdit: () -> Unit,
+    onToDoCompositionRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val density = LocalDensity.current
@@ -111,7 +111,7 @@ internal fun Wheel(
     Scaffold(
         modifier,
         floatingActionButton = {
-            FloatingActionButton(onClick = onEdit, isVisible = isFabVisible) {
+            FloatingActionButton(onClick = onToDoCompositionRequest, isVisible = isFabVisible) {
                 @Suppress("SpellCheckingInspection")
                 Icon(Icons.Rounded.Add, contentDescription = "Adicionar afazer")
             }
@@ -188,5 +188,5 @@ private fun LoadedWheelWithToDosPreview() {
 
 @Composable
 private fun Wheel(loadable: Loadable<FeatureWheel>, modifier: Modifier = Modifier) {
-    Wheel(loadable, onToDoToggle = { _, _, _ -> }, onEdit = { }, modifier)
+    Wheel(loadable, onToDoToggle = { _, _, _ -> }, onToDoCompositionRequest = { }, modifier)
 }
