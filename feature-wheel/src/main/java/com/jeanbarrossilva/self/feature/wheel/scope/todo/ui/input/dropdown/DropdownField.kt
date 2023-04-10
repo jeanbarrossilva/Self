@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
@@ -72,11 +71,12 @@ internal fun DropdownField(
                 x = LocalContext
                     .current
                     .resources
-                    .configuration
-                    .screenWidthDp
-                    .dp
-                    .div(2)
-                    .div(size.width / 2.dp),
+                    ?.configuration
+                    ?.screenWidthDp
+                    ?.dp
+                    ?.div(2)
+                    ?.div(size.width / 2.dp)
+                    ?: 0.dp,
                 y = top + size.height
             )
         } else {
@@ -94,8 +94,7 @@ internal fun DropdownField(
                     size = it.size.toDpSize(density)
                 }
                 .clip(TextFieldDefaults.shape)
-                .clickable(role = Role.DropdownList) { onExpansionToggle(true) }
-                .fillMaxWidth(),
+                .clickable(role = Role.DropdownList) { onExpansionToggle(true) },
             validator,
             state,
             onStateChange,
