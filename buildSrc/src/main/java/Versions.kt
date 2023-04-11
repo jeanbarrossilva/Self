@@ -14,6 +14,8 @@ object Versions {
     const val LOADABLE = "1.0.0"
     const val NAVIGATION = "2.5.3"
     const val ROOM = "2.5.1"
+    const val TEST_CORE = "1.5.0"
+    const val TEST_RUNNER = "1.5.2"
     const val TURBINE = "0.12.1"
     const val VICO = "1.6.4"
     const val VIEWPAGER2 = "1.0.0"

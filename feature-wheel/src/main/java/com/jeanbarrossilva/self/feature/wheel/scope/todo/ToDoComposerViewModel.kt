@@ -2,13 +2,12 @@ package com.jeanbarrossilva.self.feature.wheel.scope.todo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 internal class ToDoComposerViewModel(
     private val editor: WheelEditor,
@@ -24,13 +23,15 @@ internal class ToDoComposerViewModel(
     }
 
     fun compose(area: FeatureArea) {
-        viewModelScope.launch {
+        // TODO: Figure out a way to not have to block the current thread. Simply replacing this
+        //  call by viewModelScope.launch hangs and doesn't complete the the job.
+        runBlocking {
             editor.addToDo(WHEEL_NAME, area.name, nameFlow.value)
         }
     }
 
     companion object {
-        private const val WHEEL_NAME = "Roda da vida"
+        const val WHEEL_NAME = "Roda da vida"
 
         fun createFactory(editor: WheelEditor, areas: List<FeatureArea>):
             ViewModelProvider.Factory {

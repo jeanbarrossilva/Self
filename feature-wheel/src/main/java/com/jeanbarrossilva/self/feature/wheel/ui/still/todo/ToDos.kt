@@ -23,6 +23,7 @@ import com.jeanbarrossilva.loadable.utils.serialize
 import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
+import com.jeanbarrossilva.self.feature.wheel.utils.filterHasToDos
 import com.jeanbarrossilva.self.feature.wheel.utils.placeholder
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 
@@ -42,7 +43,7 @@ internal fun ToDos(
 }
 
 @Composable
-private fun @Suppress("Unused") ColumnScope.LoadingTitledToDos() {
+private fun @receiver:Suppress("Unused") ColumnScope.LoadingTitledToDos() {
     repeat(16) {
         TitledToDosColumn {
             Box(
@@ -74,11 +75,11 @@ private fun ColumnScope.LoadedTitledToDos(
 }
 
 @Composable
-private fun @Suppress("Unused") ColumnScope.LoadedPopulatedTitledToDos(
+private fun @receiver:Suppress("Unused") ColumnScope.LoadedPopulatedTitledToDos(
     areas: List<FeatureArea>,
     onToggle: (area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) -> Unit
 ) {
-    areas.forEach { area ->
+    areas.filterHasToDos().forEach { area ->
         LoadedTitledToDos(
             area,
             onToggle = { toDo, isDone -> onToggle(area, toDo, isDone) }

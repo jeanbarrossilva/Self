@@ -56,4 +56,8 @@ dependencies {
     implementation(Libraries.LOADABLE)
     implementation(Libraries.NAVIGATION_FRAGMENT)
     implementation(Libraries.VICO)
+
+    testImplementation(project(":wheel-in-memory-test"))
+    testImplementation(Libraries.JUNIT)
+    testImplementation(Libraries.KOTLINX_COROUTINES_TEST)
 }

@@ -16,6 +16,8 @@ object Libraries {
     const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment:${Versions.NAVIGATION}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui:${Versions.NAVIGATION}"
     const val ROOM = "androidx.room:room-ktx:${Versions.ROOM}"
+    const val TEST_CORE = "androidx.test:core-ktx:${Versions.TEST_CORE}"
+    const val TEST_RUNNER = "androidx.test:runner:${Versions.TEST_RUNNER}"
     const val TURBINE = "app.cash.turbine:turbine:${Versions.TURBINE}"
     const val VICO = "com.patrykandpatrick.vico:compose-m3:${Versions.VICO}"
     const val VIEWPAGER2 = "androidx.viewpager2:viewpager2:${Versions.VIEWPAGER2}"
