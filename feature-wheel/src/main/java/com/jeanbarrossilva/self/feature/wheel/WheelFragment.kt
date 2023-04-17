@@ -3,14 +3,17 @@ package com.jeanbarrossilva.self.feature.wheel
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.jeanbarrossilva.loadable.Loadable
+import com.jeanbarrossilva.loadable.flow.unwrap
 import com.jeanbarrossilva.self.feature.wheel.databinding.FragmentWheelBinding
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ToDoComposerFragment
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
@@ -42,10 +45,9 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
     }
 
     private fun navigateToToDoComposer() {
-        val activity = activity
-        val wheelLoadable = viewModel.getWheelLoadableFlow().value
-        if (activity != null && wheelLoadable is Loadable.Loaded) {
-            ToDoComposerFragment.show(activity, wheelLoadable.content.areas)
+        lifecycleScope.launch {
+            val wheel = viewModel.getWheelLoadableFlow().unwrap().first()
+            activity?.let { ToDoComposerFragment.show(it, wheel.areas) }
         }
     }
 }
