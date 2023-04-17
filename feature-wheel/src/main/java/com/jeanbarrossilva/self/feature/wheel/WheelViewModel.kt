@@ -8,7 +8,6 @@ import com.jeanbarrossilva.loadable.Loadable
 import com.jeanbarrossilva.loadable.flow.loadableFlow
 import com.jeanbarrossilva.loadable.flow.unwrap
 import com.jeanbarrossilva.loadable.flow.unwrapContent
-import com.jeanbarrossilva.loadable.ifLoaded
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureWheel
@@ -18,6 +17,7 @@ import com.jeanbarrossilva.self.wheel.core.infra.WheelRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
@@ -51,9 +51,8 @@ internal class WheelViewModel(
 
     fun toggleToDo(area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) {
         viewModelScope.launch {
-            getWheelLoadableFlow().value.ifLoaded {
-                editor.toggleToDo(wheelName = name, area.name, toDo.title, isDone)
-            }
+            val wheel = getWheelLoadableFlow().unwrap().first()
+            editor.toggleToDo(wheel.name, area.name, toDo.title, isDone)
         }
     }
 
