@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jeanbarrossilva.aurelius.R
 import com.jeanbarrossilva.loadable.Loadable
+import com.jeanbarrossilva.self.feature.wheel.WheelModel
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureWheel
 import com.jeanbarrossilva.self.feature.wheel.utils.entryModelOf
 import com.jeanbarrossilva.self.feature.wheel.utils.typefaceResource
@@ -58,7 +59,7 @@ private fun LoadedChart(wheel: FeatureWheel, modifier: Modifier = Modifier) {
         modifier,
         startAxis(
             axisLabelComponent(typeface = typefaceResource(R.font.dm_sans_bold)),
-            valueFormatter = { attention, _ -> "${attention.times(100).toInt()}%" }
+            valueFormatter = { attention, _ -> WheelModel.format(attention) }
         ),
         bottomAxis = bottomAxis(
             axisLabelComponent(typeface = typefaceResource(R.font.dm_sans_bold)),
