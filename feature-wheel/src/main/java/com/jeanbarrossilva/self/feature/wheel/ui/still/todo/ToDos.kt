@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.background.BackgroundContentSizing
 import com.jeanbarrossilva.loadable.Loadable
-import com.jeanbarrossilva.loadable.type.SerializableList
-import com.jeanbarrossilva.loadable.utils.emptySerializableList
-import com.jeanbarrossilva.loadable.utils.serialize
+import com.jeanbarrossilva.loadable.list.SerializableList
+import com.jeanbarrossilva.loadable.list.emptySerializableList
+import com.jeanbarrossilva.loadable.list.serialize
 import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
@@ -36,7 +36,7 @@ internal fun ToDos(
     Column(modifier.fillMaxWidth(), Arrangement.spacedBy(SelfTheme.sizes.spacing.huge)) {
         when (loadable) {
             is Loadable.Loading -> LoadingTitledToDos()
-            is Loadable.Loaded -> LoadedTitledToDos(loadable.value, onToggle)
+            is Loadable.Loaded -> LoadedTitledToDos(loadable.content, onToggle)
             is Loadable.Failed -> { }
         }
     }

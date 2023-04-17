@@ -1,3 +1,4 @@
+@Suppress("SpellCheckingInspection")
 object Libraries {
     const val ACCOMPANIST_PLACEHOLDER_MATERIAL =
         "com.google.accompanist:accompanist-placeholder-material:${Versions.ACCOMPANIST}"

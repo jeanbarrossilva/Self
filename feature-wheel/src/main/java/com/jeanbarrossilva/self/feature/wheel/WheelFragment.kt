@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.jeanbarrossilva.loadable.Loadable
 import com.jeanbarrossilva.self.feature.wheel.databinding.FragmentWheelBinding
 import com.jeanbarrossilva.self.feature.wheel.scope.todo.ToDoComposerFragment
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
@@ -16,7 +17,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
     private val repository by inject<WheelRepository>()
     private val editor by inject<WheelEditor>()
     private val viewModel by viewModels<WheelViewModel> {
-        WheelViewModel.createFactory(activity?.application!!, repository, editor)
+        WheelViewModel.createFactory(repository, editor)
     }
     private val boundary by inject<WheelBoundary>()
 
@@ -42,9 +43,9 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
 
     private fun navigateToToDoComposer() {
         val activity = activity
-        val wheel = viewModel.wheel
-        if (activity != null && wheel != null) {
-            ToDoComposerFragment.show(activity, wheel.areas)
+        val wheelLoadable = viewModel.getWheelLoadableFlow().value
+        if (activity != null && wheelLoadable is Loadable.Loaded) {
+            ToDoComposerFragment.show(activity, wheelLoadable.content.areas)
         }
     }
 }

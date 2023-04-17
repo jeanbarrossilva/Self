@@ -17,7 +17,7 @@ import com.jeanbarrossilva.aurelius.ui.input.Checkbox
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.background.BackgroundContentSizing
 import com.jeanbarrossilva.loadable.Loadable
-import com.jeanbarrossilva.loadable.utils.ifLoaded
+import com.jeanbarrossilva.loadable.ifLoaded
 import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
