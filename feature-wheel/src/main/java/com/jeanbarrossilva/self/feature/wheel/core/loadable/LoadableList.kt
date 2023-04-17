@@ -1,8 +1,8 @@
 package com.jeanbarrossilva.self.feature.wheel.core.loadable
 
 import com.jeanbarrossilva.loadable.Loadable
-import com.jeanbarrossilva.loadable.type.SerializableList
-import com.jeanbarrossilva.loadable.utils.emptySerializableList
+import com.jeanbarrossilva.loadable.list.SerializableList
+import com.jeanbarrossilva.loadable.list.emptySerializableList
 import java.io.Serializable
 
 internal sealed interface LoadableList<T : Serializable?> {

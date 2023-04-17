@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,10 +36,9 @@ import com.jeanbarrossilva.aurelius.utils.plus
 import com.jeanbarrossilva.aurelius.utils.toDp
 import com.jeanbarrossilva.aurelius.utils.toDpSize
 import com.jeanbarrossilva.loadable.Loadable
-import com.jeanbarrossilva.loadable.utils.collectAsState
-import com.jeanbarrossilva.loadable.utils.map
-import com.jeanbarrossilva.loadable.utils.serialize
-import com.jeanbarrossilva.loadable.utils.valueOrNull
+import com.jeanbarrossilva.loadable.contentOrNull
+import com.jeanbarrossilva.loadable.list.serialize
+import com.jeanbarrossilva.loadable.map
 import com.jeanbarrossilva.self.feature.wheel.core.loadable.LoadableList
 import com.jeanbarrossilva.self.feature.wheel.core.loadable.flatMap
 import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
@@ -75,7 +75,7 @@ internal fun Wheel(
     val fabMargin = SelfTheme.sizes.margin.fab
     val navigationBarMargin = SelfTheme.sizes.margin.navigationBar
     val isFabVisible = remember(loadable) { loadable is Loadable.Loaded }
-    val title = remember(loadable) { loadable.map(FeatureWheel::name).valueOrNull.orEmpty() }
+    val title = remember(loadable) { loadable.map(FeatureWheel::name).contentOrNull.orEmpty() }
     val lazyColumnState = rememberLazyListState()
     val lazyColumnLayoutInfo by remember(lazyColumnState) {
         derivedStateOf {

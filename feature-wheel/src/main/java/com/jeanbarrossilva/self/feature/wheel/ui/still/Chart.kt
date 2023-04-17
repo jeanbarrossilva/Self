@@ -30,7 +30,7 @@ internal fun Chart(wheelLoadable: Loadable<FeatureWheel>, modifier: Modifier = M
     Container(modifier) {
         when (wheelLoadable) {
             is Loadable.Loading -> LoadingChart()
-            is Loadable.Loaded -> LoadedChart(wheelLoadable.value)
+            is Loadable.Loaded -> LoadedChart(wheelLoadable.content)
             is Loadable.Failed -> {}
         }
     }
