@@ -6,7 +6,6 @@ object Versions {
     const val COMPOSE_COLLAPSING_TOOLBAR = "2.3.5"
     const val COMPOSE_COMPILER = "1.4.4"
     const val COMPOSE_FOUNDATION = "1.4.0"
-    const val COMPOSE_UI = "1.4.1"
     const val GRADLE = "7.4.2"
     const val JUNIT = "4.13.2"
     const val KOIN = "3.3.3"
