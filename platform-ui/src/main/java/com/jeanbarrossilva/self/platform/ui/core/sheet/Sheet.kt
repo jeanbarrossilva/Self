@@ -18,27 +18,42 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jeanbarrossilva.aurelius.utils.end
+import com.jeanbarrossilva.aurelius.utils.start
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
-import com.jeanbarrossilva.self.platform.ui.utils.elevated
 import com.jeanbarrossilva.self.platform.ui.utils.top
 
 @Composable
 fun Sheet(
     title: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    isContentPadded: Boolean = true,
     content: @Composable () -> Unit
 ) {
     Sheet(modifier) {
         LazyColumn(
             Modifier.fillMaxWidth(),
-            contentPadding = it,
+            contentPadding = if (isContentPadded) SheetDefaults.padding else PaddingValues(0.dp),
             verticalArrangement = Arrangement.spacedBy(SelfTheme.sizes.spacing.large)
         ) {
             item {
                 ProvideTextStyle(
-                    SelfTheme.text.title.large.copy(SelfTheme.colors.text.highlighted),
-                    title
-                )
+                    SelfTheme.text.title.large.copy(SelfTheme.colors.text.highlighted)
+                ) {
+                    if (!isContentPadded) {
+                        Box(
+                            Modifier.padding(
+                                start = SheetDefaults.padding.start,
+                                top = SheetDefaults.padding.calculateTopPadding(),
+                                end = SheetDefaults.padding.end
+                            )
+                        ) {
+                            title()
+                        }
+                    } else {
+                        title()
+                    }
+                }
             }
 
             item {
@@ -51,7 +66,7 @@ fun Sheet(
 @Composable
 fun Sheet(
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.(padding: PaddingValues) -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column {
         Box(
@@ -66,7 +81,7 @@ fun Sheet(
         Card(
             modifier.fillMaxWidth(),
             SelfTheme.shapes.large.top,
-            CardDefaults.cardColors(containerColor = SelfTheme.colors.elevated),
+            CardDefaults.cardColors(SheetDefaults.containerColor),
             CardDefaults.cardElevation(
                 defaultElevation = 0.dp,
                 pressedElevation = 0.dp,
@@ -76,7 +91,7 @@ fun Sheet(
                 disabledElevation = 0.dp
             )
         ) {
-            content(SheetDefaults.padding)
+            content()
         }
     }
 }
@@ -88,7 +103,7 @@ private fun UntitledSheetPreview() {
     SelfTheme {
         Sheet {
             @Suppress("SpellCheckingInspection")
-            Text("Conteúdo", Modifier.padding(it))
+            Text("Conteúdo", Modifier.padding(SheetDefaults.padding))
         }
     }
 }

@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -56,11 +56,11 @@ import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 @Composable
 internal fun Wheel(
     viewModel: WheelViewModel,
-    onToDoCompositionRequest: () -> Unit,
+    onEditRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val loadable by viewModel.getWheelLoadableFlow().collectAsState()
-    Wheel(loadable, onToDoToggle = viewModel::toggleToDo, onToDoCompositionRequest, modifier)
+    Wheel(loadable, onToDoToggle = viewModel::toggleToDo, onEditRequest, modifier)
 }
 
 @Composable
@@ -68,7 +68,7 @@ internal fun Wheel(
 internal fun Wheel(
     loadable: Loadable<FeatureWheel>,
     onToDoToggle: (area: FeatureArea, toDo: FeatureToDo, isDone: Boolean) -> Unit,
-    onToDoCompositionRequest: () -> Unit,
+    onEditRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val density = LocalDensity.current
@@ -111,9 +111,9 @@ internal fun Wheel(
     Scaffold(
         modifier,
         floatingActionButton = {
-            FloatingActionButton(onClick = onToDoCompositionRequest, isVisible = isFabVisible) {
+            FloatingActionButton(onClick = onEditRequest, isVisible = isFabVisible) {
                 @Suppress("SpellCheckingInspection")
-                Icon(Icons.Rounded.Add, contentDescription = "Adicionar afazer")
+                Icon(Icons.Rounded.Edit, contentDescription = "Adicionar afazer")
             }
         }
     ) {
@@ -188,5 +188,5 @@ private fun LoadedWheelWithToDosPreview() {
 
 @Composable
 private fun Wheel(loadable: Loadable<FeatureWheel>, modifier: Modifier = Modifier) {
-    Wheel(loadable, onToDoToggle = { _, _, _ -> }, onToDoCompositionRequest = { }, modifier)
+    Wheel(loadable, onToDoToggle = { _, _, _ -> }, onEditRequest = { }, modifier)
 }

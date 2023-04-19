@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.jeanbarrossilva.loadable.flow.unwrap
 import com.jeanbarrossilva.self.feature.wheel.databinding.FragmentWheelBinding
-import com.jeanbarrossilva.self.feature.wheel.scope.todo.ToDoComposerFragment
+import com.jeanbarrossilva.self.feature.wheel.scope.editing.EditingSheetFragment
 import com.jeanbarrossilva.self.platform.ui.core.binding.BindingFragment
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
@@ -34,7 +34,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.root?.setContent {
             SelfTheme {
-                Wheel(viewModel, onToDoCompositionRequest = ::navigateToToDoComposer)
+                Wheel(viewModel, onEditRequest = ::navigateToEditingSheet)
             }
         }
     }
@@ -44,10 +44,10 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
         boundary.navigateToQuestionnaire(navController)
     }
 
-    private fun navigateToToDoComposer() {
+    private fun navigateToEditingSheet() {
         lifecycleScope.launch {
             val wheel = viewModel.getWheelLoadableFlow().unwrap().first()
-            activity?.let { ToDoComposerFragment.show(it, wheel.areas) }
+            activity?.let { EditingSheetFragment.show(it, wheel.areas) }
         }
     }
 }
