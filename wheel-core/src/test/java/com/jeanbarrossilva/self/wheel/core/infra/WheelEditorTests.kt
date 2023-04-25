@@ -17,30 +17,10 @@ internal class WheelEditorTests {
 
     @Test
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun `GIVEN a nonexistent wheel WHEN editing its name THEN it throws`() {
-        assertFailsWith<AssertionError> {
+    fun `GIVEN a nonexistent wheel WHEN editing it THEN it throws`() {
+        assertFailsWith<IllegalArgumentException> {
             runTest {
-                wheelRule.editor.setName(wheelName = ":D", name = ":P")
-            }
-        }
-    }
-
-    @Test
-    @OptIn(ExperimentalCoroutinesApi::class)
-    fun `GIVEN a nonexistent wheel WHEN adding an area to it THEN it throws`() {
-        assertFailsWith<AssertionError> {
-            runTest {
-                wheelRule.editor.addArea(wheelName = ":O", areaName = ":C", areaAttention = 0f)
-            }
-        }
-    }
-
-    @Test
-    @OptIn(ExperimentalCoroutinesApi::class)
-    fun `GIVEN a nonexistent wheel WHEN adding a to-do to one of its areas THEN it throws`() {
-        assertFailsWith<AssertionError> {
-            runTest {
-                wheelRule.editor.addToDo(wheelName = ":L", areaName = ":I", toDoTitle = "Do")
+                wheelRule.editor.onWheel(":D")
             }
         }
     }
@@ -48,10 +28,10 @@ internal class WheelEditorTests {
     @Test
     @OptIn(ExperimentalCoroutinesApi::class)
     fun `GIVEN an existing wheel's nonexistent area WHEN adding a to-do to it THEN it throws`() {
-        assertFailsWith<AssertionError> {
+        assertFailsWith<IllegalArgumentException> {
             runTest {
                 wheelRule.register.register(":v")
-                wheelRule.editor.addToDo(wheelName = ":v", areaName = ";)", toDoTitle = ":*")
+                wheelRule.editor.onWheel(":v").onArea(";)")
             }
         }
     }
@@ -61,8 +41,14 @@ internal class WheelEditorTests {
     fun `GIVEN a to-do WHEN adding it to an area THEN it's not yet done`() {
         runTest {
             wheelRule.register.register(":S")
-            wheelRule.editor.addArea(wheelName = ":S", areaName = ":X", areaAttention = .5f)
-            wheelRule.editor.addToDo(wheelName = ":S", areaName = ":X", toDoTitle = "Eat")
+            wheelRule
+                .editor
+                .onWheel(":S")
+                .addArea(name = ":X", attention = .5f)
+                .submit()
+                .onArea(":X")
+                .addToDo("Eat")
+                .submit()
             wheelRule.repository.fetch().map { it.first().areas.first().toDos.first() }.test {
                 assertFalse(awaitItem().isDone)
             }

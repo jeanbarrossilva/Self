@@ -1,7 +1,7 @@
 package com.jeanbarrossilva.self.feature.questionnaire.domain.attention
 
 import androidx.annotation.IntRange
-import com.jeanbarrossilva.self.wheel.core.domain.Area
+import com.jeanbarrossilva.self.wheel.core.domain.area.Area
 
 @IntRange(from = AttentionPercent.MIN.toLong(), to = AttentionPercent.MAX.toLong())
 @Target(AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FUNCTION, AnnotationTarget.TYPE)

@@ -6,6 +6,7 @@ import com.jeanbarrossilva.self.wheel.core.utils.get
 import com.jeanbarrossilva.self.wheel.inmemory.test.utils.inMemory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -15,16 +16,18 @@ import org.junit.Rule
 import org.junit.Test
 
 internal class ToDoComposerViewModelTests {
-    private lateinit var viewModel: ToDoComposerViewModel
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val coroutineDispatcher = StandardTestDispatcher()
 
     @get:Rule
     val wheelTestRule = WheelTestRule.inMemory()
 
+    private val viewModel = ToDoComposerViewModel(wheelTestRule.editor, FeatureArea.samples)
+
     @Before
     @OptIn(ExperimentalCoroutinesApi::class)
     fun setUp() {
-        Dispatchers.setMain(StandardTestDispatcher())
-        viewModel = ToDoComposerViewModel(wheelTestRule.editor, FeatureArea.samples)
+        Dispatchers.setMain(coroutineDispatcher)
     }
 
     @Test
@@ -34,15 +37,15 @@ internal class ToDoComposerViewModelTests {
         val area = FeatureArea.sample
         val areaName = area.name
         val toDoTitle = ":D"
-        runTest {
+        runTest(coroutineDispatcher) {
             wheelTestRule.register.register(wheelName)
-            wheelTestRule.editor.addArea(wheelName, areaName, areaAttention = 0f)
+            wheelTestRule.editor.onWheel(wheelName).addArea(areaName, attention = 0f).submit()
             viewModel.setName(toDoTitle)
             viewModel.compose(area)
             wheelTestRule
                 .repository
                 .fetch()
-                .value[wheelName]
+                .first()[wheelName]
                 ?.areas
                 ?.get(areaName)
                 ?.toDos

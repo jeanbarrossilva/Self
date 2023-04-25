@@ -1,7 +1,7 @@
 package com.jeanbarrossilva.self.feature.questionnaire.domain.attention
 
 import androidx.annotation.FloatRange
-import com.jeanbarrossilva.self.wheel.core.domain.Area
+import com.jeanbarrossilva.self.wheel.core.domain.area.Area
 
 @Target(
     AnnotationTarget.PROPERTY,

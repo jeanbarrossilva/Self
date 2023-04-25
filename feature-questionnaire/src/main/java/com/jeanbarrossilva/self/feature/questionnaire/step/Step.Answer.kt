@@ -27,9 +27,9 @@ import com.jeanbarrossilva.self.feature.questionnaire.core.attention.AttentionPe
 import com.jeanbarrossilva.self.feature.questionnaire.infra.AttentionConverter
 import com.jeanbarrossilva.self.feature.questionnaire.step.answer.AnswerFieldValue
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
-import com.jeanbarrossilva.self.wheel.core.domain.Area
+import com.jeanbarrossilva.self.wheel.core.domain.area.Area
 
-internal const val STEP_ANSWER_TAG = "step_answer"
+const val STEP_ANSWER_TAG = "step_answer"
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

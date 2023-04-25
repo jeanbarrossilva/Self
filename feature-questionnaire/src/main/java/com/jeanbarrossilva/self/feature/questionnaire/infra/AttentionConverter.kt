@@ -2,7 +2,7 @@ package com.jeanbarrossilva.self.feature.questionnaire.infra
 
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.AttentionPercent
-import com.jeanbarrossilva.self.wheel.core.domain.Area
+import com.jeanbarrossilva.self.wheel.core.domain.area.Area
 
 internal object AttentionConverter {
     @Attention

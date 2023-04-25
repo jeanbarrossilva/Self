@@ -32,7 +32,7 @@ internal class QuestionnaireViewModel(
 
     private suspend fun addAreas() {
         answers.forEach { (areaName, answer) ->
-            editor.addArea(WHEEL_NAME, areaName, areaAttention = answer)
+            editor.onWheel(WHEEL_NAME).addArea(areaName, attention = answer).submit()
         }
     }
 

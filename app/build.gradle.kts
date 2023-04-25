@@ -14,7 +14,9 @@ android {
         targetSdk = Versions.Self.SDK_TARGET
         versionCode = Versions.Self.CODE
         versionName = Versions.Self.NAME
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        @Suppress("SpellCheckingInspection")
+        testInstrumentationRunner = "com.jeanbarrossilva.self.app.test.SelfRunner"
     }
 
     buildTypes {
@@ -45,4 +47,12 @@ dependencies {
     implementation(Libraries.KOIN)
     implementation(Libraries.NAVIGATION_FRAGMENT)
     implementation(Libraries.NAVIGATION_UI)
+
+    androidTestImplementation(project(":app-test"))
+    androidTestImplementation(project(":platform-ui"))
+    androidTestImplementation(project(":wheel-android-test"))
+    androidTestImplementation(Libraries.COMPOSE_UI_TEST_JUNIT4)
+    androidTestImplementation(Libraries.COMPOSE_UI_TEST_MANIFEST)
+    androidTestImplementation(Libraries.KOIN_TEST)
+    androidTestImplementation(Libraries.TURBINE)
 }

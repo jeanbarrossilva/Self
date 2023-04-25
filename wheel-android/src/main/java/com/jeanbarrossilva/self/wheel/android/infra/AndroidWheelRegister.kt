@@ -4,7 +4,7 @@ import com.jeanbarrossilva.self.wheel.android.domain.area.AndroidAreaDao
 import com.jeanbarrossilva.self.wheel.android.domain.todo.AndroidToDoDao
 import com.jeanbarrossilva.self.wheel.android.domain.wheel.AndroidWheelDao
 import com.jeanbarrossilva.self.wheel.android.utils.domain
-import com.jeanbarrossilva.self.wheel.core.domain.Wheel
+import com.jeanbarrossilva.self.wheel.core.domain.wheel.Wheel
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRegister
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRepository
 
@@ -17,14 +17,14 @@ class AndroidWheelRegister(
     override suspend fun onRegister(wheel: Wheel) {
         val wheelEntity = wheel.domain()
         val areaEntities = wheel.areas.map { it.domain(parent = wheelEntity.name) }
-        val toDos = wheel.areas.flatMap { area ->
+        val toDoEntities = wheel.areas.flatMap { area ->
             area.toDos.map {
                 it.domain(grandparent = wheelEntity.name, parent = area.name)
             }
         }
         wheelDao.insert(wheelEntity)
         areaDao.insert(areaEntities)
-        toDoDao.insert(toDos)
+        toDoDao.insert(toDoEntities)
     }
 
     override suspend fun clear() {

@@ -19,11 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jeanbarrossilva.aurelius.ui.layout.background.Background
 import com.jeanbarrossilva.aurelius.ui.layout.background.BackgroundContentSizing
 import com.jeanbarrossilva.self.platform.ui.theme.SelfTheme
+
+const val STEP_NEXT_BUTTON_TAG = "step_next_button"
 
 @Composable
 internal fun NextButton(
@@ -47,7 +50,8 @@ internal fun NextButton(
             .onFocusChanged { isFocused = it.isFocused }
             .clip(shape)
             .shadow(elevation, shape)
-            .size(56.dp),
+            .size(56.dp)
+            .testTag(STEP_NEXT_BUTTON_TAG),
         isEnabled,
         IconButtonDefaults.filledIconButtonColors(
             containerColor,

@@ -1,6 +1,6 @@
 package com.jeanbarrossilva.self.wheel.inmemory.infra
 
-import com.jeanbarrossilva.self.wheel.core.domain.Wheel
+import com.jeanbarrossilva.self.wheel.core.domain.wheel.Wheel
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRegister
 
 class InMemoryWheelRegister(override val repository: InMemoryWheelRepository) : WheelRegister() {

@@ -1,5 +1,6 @@
 package com.jeanbarrossilva.self.wheel.core.domain
 
+import com.jeanbarrossilva.self.wheel.core.domain.area.Area
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 

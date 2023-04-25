@@ -1,8 +1,8 @@
 package com.jeanbarrossilva.self.wheel.core.utils
 
-import com.jeanbarrossilva.self.wheel.core.domain.Area
-import com.jeanbarrossilva.self.wheel.core.domain.ToDo
-import com.jeanbarrossilva.self.wheel.core.domain.Wheel
+import com.jeanbarrossilva.self.wheel.core.domain.area.Area
+import com.jeanbarrossilva.self.wheel.core.domain.todo.ToDo
+import com.jeanbarrossilva.self.wheel.core.domain.wheel.Wheel
 
 operator fun Collection<Area>.get(name: String): Area? {
     return find {

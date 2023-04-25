@@ -7,8 +7,12 @@ object Libraries {
         "me.onebone:toolbar-compose:${Versions.COMPOSE_COLLAPSING_TOOLBAR}"
     const val COMPOSE_FOUNDATION =
         "androidx.compose.foundation:foundation:${Versions.COMPOSE_FOUNDATION}"
+    const val COMPOSE_UI_TEST_JUNIT4 = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_UI}"
+    const val COMPOSE_UI_TEST_MANIFEST =
+        "androidx.compose.ui:ui-test-manifest:${Versions.COMPOSE_UI}"
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
     const val KOIN = "io.insert-koin:koin-android:${Versions.KOIN}"
+    const val KOIN_TEST = "io.insert-koin:koin-test-junit4:${Versions.KOIN}"
     const val KOTLINX_COROUTINES_CORE =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLINX_COROUTINES}"
     const val KOTLINX_COROUTINES_TEST =

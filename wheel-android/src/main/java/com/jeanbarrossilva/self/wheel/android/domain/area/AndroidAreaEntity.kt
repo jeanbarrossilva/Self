@@ -3,7 +3,7 @@ package com.jeanbarrossilva.self.wheel.android.domain.area
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.jeanbarrossilva.self.wheel.android.domain.todo.AndroidToDoEntity
-import com.jeanbarrossilva.self.wheel.core.domain.Area
+import com.jeanbarrossilva.self.wheel.core.domain.area.Area
 
 @Entity(tableName = "areas")
 internal data class AndroidAreaEntity(

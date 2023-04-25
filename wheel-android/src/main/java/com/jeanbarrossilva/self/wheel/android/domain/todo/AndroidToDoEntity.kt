@@ -3,7 +3,7 @@ package com.jeanbarrossilva.self.wheel.android.domain.todo
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jeanbarrossilva.self.wheel.core.domain.ToDo
+import com.jeanbarrossilva.self.wheel.core.domain.todo.ToDo
 
 @Entity(tableName = "to_dos")
 internal data class AndroidToDoEntity(
