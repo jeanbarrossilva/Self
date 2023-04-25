@@ -1,6 +1,7 @@
 package com.jeanbarrossilva.self.wheel.android.infra
 
-import com.jeanbarrossilva.self.wheel.android.test.AndroidWheelTestRule
+import com.jeanbarrossilva.self.wheel.android.test.android
+import com.jeanbarrossilva.self.wheel.core.test.WheelTestRule
 import com.jeanbarrossilva.self.wheel.core.utils.get
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -13,7 +14,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class AndroidWheelEditorTests {
     @get:Rule
-    val androidWheelRule = AndroidWheelTestRule()
+    val androidWheelRule = WheelTestRule.android()
 
     @Test
     fun addsArea() {

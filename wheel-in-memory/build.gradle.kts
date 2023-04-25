@@ -9,7 +9,6 @@ java {
 }
 
 dependencies {
-
     api(project(":wheel-core"))
     implementation(Libraries.KOTLINX_COROUTINES_CORE)
 

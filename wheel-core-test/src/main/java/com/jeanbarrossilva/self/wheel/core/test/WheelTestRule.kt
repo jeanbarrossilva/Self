@@ -7,16 +7,20 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.rules.ExternalResource
 
-class WheelTestRule(
-    val repository: WheelRepository,
-    val register: WheelRegister,
-    val editor: WheelEditor
-) : ExternalResource() {
+abstract class WheelTestRule : ExternalResource() {
+    abstract val repository: WheelRepository
+    abstract val register: WheelRegister
+    abstract val editor: WheelEditor
+
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun after() {
+    final override fun after() {
         runTest {
             register.clear()
+            onAfter()
         }
+    }
+
+    protected open suspend fun onAfter() {
     }
 
     companion object

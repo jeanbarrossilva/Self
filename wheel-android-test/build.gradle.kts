@@ -6,7 +6,7 @@ plugins {
 
 @Suppress("UnstableApiUsage")
 android {
-    namespace = Metadata.namespace("wheel.android")
+    namespace = Metadata.namespace("wheel.android.test")
     compileSdk = Versions.Self.SDK_COMPILE
 
     defaultConfig {
@@ -40,7 +40,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":wheel-android"))
-    implementation(Libraries.JUNIT)
+    api(project(":wheel-android"))
+    api(project(":wheel-core-test"))
+
     implementation(Libraries.TEST_CORE)
 }

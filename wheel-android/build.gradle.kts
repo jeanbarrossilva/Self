@@ -49,7 +49,6 @@ dependencies {
     implementation(Libraries.KOIN)
 
     androidTestImplementation(project(":wheel-android-test"))
-    androidTestImplementation(Libraries.JUNIT)
     androidTestImplementation(Libraries.KOTLINX_COROUTINES_TEST)
     androidTestImplementation(Libraries.TEST_CORE)
     androidTestImplementation(Libraries.TEST_RUNNER)

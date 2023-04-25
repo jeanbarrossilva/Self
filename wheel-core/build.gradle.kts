@@ -11,7 +11,6 @@ java {
 dependencies {
     implementation(Libraries.KOTLINX_COROUTINES_CORE)
 
-    testImplementation(project(":wheel-in-memory"))
     testImplementation(project(":wheel-in-memory-test"))
     testImplementation(kotlin("test"))
     testImplementation(Libraries.KOTLINX_COROUTINES_TEST)

@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.jeanbarrossilva.self.wheel.core.domain.todo.ToDo
 import com.jeanbarrossilva.self.wheel.core.test.WheelTestRule
 import com.jeanbarrossilva.self.wheel.core.utils.get
-import com.jeanbarrossilva.self.wheel.inmemory.test.utils.inMemory
+import com.jeanbarrossilva.self.wheel.inmemory.test.inMemory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -85,7 +85,7 @@ internal class InMemoryWheelEditorTests {
         }
     }
 
-    private suspend fun getToDoFlow(wheelName: String, areaName: String, toDoTitle: String):
+    private fun getToDoFlow(wheelName: String, areaName: String, toDoTitle: String):
         Flow<ToDo> {
         return wheelRule.repository.fetch().mapNotNull {
             it[wheelName]?.areas?.get(areaName)?.toDos?.get(toDoTitle)

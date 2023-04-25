@@ -10,6 +10,5 @@ java {
 
 dependencies {
     api(project(":wheel-core-test"))
-
-    implementation(project(":wheel-in-memory"))
+    api(project(":wheel-in-memory"))
 }

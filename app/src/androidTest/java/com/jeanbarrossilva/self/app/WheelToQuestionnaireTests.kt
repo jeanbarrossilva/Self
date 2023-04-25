@@ -12,7 +12,8 @@ import com.jeanbarrossilva.self.feature.questionnaire.step.STEP_ANSWER_TAG
 import com.jeanbarrossilva.self.feature.questionnaire.step.STEP_NEXT_BUTTON_TAG
 import com.jeanbarrossilva.self.feature.wheel.WheelModel
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
-import com.jeanbarrossilva.self.wheel.android.test.AndroidWheelTestRule
+import com.jeanbarrossilva.self.wheel.android.test.android
+import com.jeanbarrossilva.self.wheel.core.test.WheelTestRule
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,7 +24,7 @@ import org.junit.rules.RuleChain
 import org.koin.test.KoinTestRule
 
 internal class WheelToQuestionnaireTests {
-    private val wheelRule = AndroidWheelTestRule()
+    private val wheelRule = WheelTestRule.android()
     private val koinRule = KoinTestRule.create {
         modules(
             CoreModule({ wheelRule.repository }, { wheelRule.register }, { wheelRule.editor }),

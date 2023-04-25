@@ -9,7 +9,8 @@ java {
 }
 
 dependencies {
+    api(Libraries.JUNIT)
+
     implementation(project(":wheel-core"))
-    implementation(Libraries.JUNIT)
     implementation(Libraries.KOTLINX_COROUTINES_TEST)
 }
