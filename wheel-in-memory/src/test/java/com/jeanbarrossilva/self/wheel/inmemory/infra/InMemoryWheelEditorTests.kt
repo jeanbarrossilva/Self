@@ -1,7 +1,7 @@
 package com.jeanbarrossilva.self.wheel.inmemory.infra
 
 import app.cash.turbine.test
-import com.jeanbarrossilva.self.wheel.core.domain.ToDo
+import com.jeanbarrossilva.self.wheel.core.domain.todo.ToDo
 import com.jeanbarrossilva.self.wheel.core.test.WheelTestRule
 import com.jeanbarrossilva.self.wheel.core.utils.get
 import com.jeanbarrossilva.self.wheel.inmemory.test.utils.inMemory
@@ -24,7 +24,7 @@ internal class InMemoryWheelEditorTests {
     fun `GIVEN a wheel's name WHEN editing it THEN it's changed in the repository`() {
         runTest {
             wheelRule.register.register("Joan")
-            wheelRule.editor.setName(wheelName = "Joan", name = "Jonas")
+            wheelRule.editor.onWheel("Joan").setName("Jonas").submit()
             wheelRule.repository.fetch().test { assertEquals("Jonas", awaitItem().first().name) }
         }
     }
@@ -34,7 +34,7 @@ internal class InMemoryWheelEditorTests {
     fun `GIVEN an area WHEN adding it to a wheel THEN it's added in the repository`() {
         runTest {
             wheelRule.register.register("Jean")
-            wheelRule.editor.addArea(wheelName = "Jean", areaName = "Work", areaAttention = .8f)
+            wheelRule.editor.onWheel("Jean").addArea(name = "Work", attention = .8f).submit()
             wheelRule.repository.fetch().map { it.first().areas.first() }.test {
                 awaitItem().let { area ->
                     assertEquals("Work", area.name)
@@ -47,13 +47,18 @@ internal class InMemoryWheelEditorTests {
     @Test
     @OptIn(ExperimentalCoroutinesApi::class)
     fun `GIVEN a to-do WHEN adding it to an area THEN it's added in the repository`() {
-        val toDoTitle = "Take Julia shopping"
         runTest {
             wheelRule.register.register("Danilo")
-            wheelRule.editor.addArea(wheelName = "Danilo", areaName = "Family", areaAttention = .2f)
-            wheelRule.editor.addToDo(wheelName = "Danilo", areaName = "Family", toDoTitle)
-            getToDoFlow(wheelName = "Danilo", areaName = "Family", toDoTitle).test {
-                assertEquals(toDoTitle, awaitItem().title)
+            wheelRule
+                .editor
+                .onWheel("Danilo")
+                .addArea(name = "Family", attention = .2f)
+                .submit()
+                .onArea("Family")
+                .addToDo("Take Julia shopping")
+                .submit()
+            getToDoFlow("Danilo", "Family", "Take Julia shopping").test {
+                assertEquals("Take Julia shopping", awaitItem().title)
             }
         }
     }
@@ -63,14 +68,17 @@ internal class InMemoryWheelEditorTests {
     fun `GIVEN a to-do WHEN toggling it THEN the change is reflected on the repository`() {
         runTest {
             wheelRule.register.register("Alan")
-            wheelRule.editor.addArea(wheelName = "Alan", areaName = "Studies", areaAttention = 1f)
-            wheelRule.editor.addToDo(wheelName = "Alan", areaName = "Studies", toDoTitle = "Study")
-            wheelRule.editor.toggleToDo(
-                wheelName = "Alan",
-                areaName = "Studies",
-                toDoTitle = "Study",
-                isToDoDone = true
-            )
+            wheelRule
+                .editor
+                .onWheel("Alan")
+                .addArea(name = "Studies", attention = 1f)
+                .submit()
+                .onArea("Studies")
+                .addToDo("Study")
+                .submit()
+                .onToDo("Study")
+                .setDone(true)
+                .submit()
             getToDoFlow(wheelName = "Alan", areaName = "Studies", toDoTitle = "Study").test {
                 assertTrue(awaitItem().isDone)
             }

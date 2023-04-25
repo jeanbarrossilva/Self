@@ -1,5 +1,6 @@
-package com.jeanbarrossilva.self.wheel.core.domain
+package com.jeanbarrossilva.self.wheel.core.domain.area
 
+import com.jeanbarrossilva.self.wheel.core.domain.todo.ToDo
 import java.io.Serializable
 
 data class Area(val name: String, val attention: Float, val toDos: List<ToDo> = emptyList()) :

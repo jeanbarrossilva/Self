@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.jeanbarrossilva.self.wheel.android.domain.area.AndroidAreaEntity
 import com.jeanbarrossilva.self.wheel.android.domain.todo.AndroidToDoEntity
-import com.jeanbarrossilva.self.wheel.core.domain.Wheel
+import com.jeanbarrossilva.self.wheel.core.domain.wheel.Wheel
 
 @Entity(tableName = "wheels")
 internal data class AndroidWheelEntity(

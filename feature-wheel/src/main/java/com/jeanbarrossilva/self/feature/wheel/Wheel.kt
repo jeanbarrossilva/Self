@@ -59,7 +59,7 @@ internal fun Wheel(
     onEditRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val loadable by viewModel.getWheelLoadableFlow().collectAsState()
+    val loadable by viewModel.wheelLoadableFlow.collectAsState()
     Wheel(loadable, onToDoToggle = viewModel::toggleToDo, onEditRequest, modifier)
 }
 

@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
+class WheelFragment : BindingFragment<FragmentWheelBinding>() {
     private val repository by inject<WheelRepository>()
     private val editor by inject<WheelEditor>()
     private val viewModel by viewModels<WheelViewModel> {
@@ -46,7 +46,7 @@ internal class WheelFragment : BindingFragment<FragmentWheelBinding>() {
 
     private fun navigateToEditingSheet() {
         lifecycleScope.launch {
-            val wheel = viewModel.getWheelLoadableFlow().unwrap().first()
+            val wheel = viewModel.wheelLoadableFlow.unwrap().first()
             activity?.let { EditingSheetFragment.show(it, wheel.areas) }
         }
     }

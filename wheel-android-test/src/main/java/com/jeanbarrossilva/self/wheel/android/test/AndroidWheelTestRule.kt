@@ -7,11 +7,9 @@ import com.jeanbarrossilva.self.wheel.android.infra.AndroidWheelEditor
 import com.jeanbarrossilva.self.wheel.android.infra.AndroidWheelRegister
 import com.jeanbarrossilva.self.wheel.android.infra.AndroidWheelRepository
 import com.jeanbarrossilva.self.wheel.android.infra.WheelDatabase
-import kotlinx.coroutines.CoroutineScope
 import org.junit.rules.ExternalResource
 
-internal class AndroidWheelTestRule(private val coroutineScope: CoroutineScope) :
-    ExternalResource() {
+class AndroidWheelTestRule : ExternalResource() {
     private lateinit var database: WheelDatabase
 
     lateinit var repository: AndroidWheelRepository
@@ -25,7 +23,7 @@ internal class AndroidWheelTestRule(private val coroutineScope: CoroutineScope) 
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room.inMemoryDatabaseBuilder(context, WheelDatabase::class.java).build()
         val (wheelDao, areaDao, toDoDao) = with(database) { Triple(wheelDao, areaDao, toDoDao) }
-        repository = AndroidWheelRepository(wheelDao, areaDao, toDoDao, coroutineScope)
+        repository = AndroidWheelRepository(wheelDao, areaDao, toDoDao)
         register = AndroidWheelRegister(repository, wheelDao, areaDao, toDoDao)
         editor = AndroidWheelEditor(repository, wheelDao, areaDao, toDoDao)
     }

@@ -18,7 +18,8 @@ import com.jeanbarrossilva.self.wheel.core.infra.WheelRegister
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-internal class QuestionnaireFragment : BindingFragment<FragmentQuestionnaireBinding>() {
+class QuestionnaireFragment internal constructor() :
+    BindingFragment<FragmentQuestionnaireBinding>() {
     private val register by inject<WheelRegister>()
     private val editor by inject<WheelEditor>()
     private val boundary by inject<QuestionnaireBoundary>()

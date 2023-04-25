@@ -26,7 +26,7 @@ internal class ToDoComposerViewModel(
         // TODO: Figure out a way to not have to block the current thread. Simply replacing this
         //  call by viewModelScope.launch hangs and doesn't complete the the job.
         runBlocking {
-            editor.addToDo(WHEEL_NAME, area.name, nameFlow.value)
+            editor.onWheel(WHEEL_NAME).onArea(area.name).addToDo(nameFlow.value).submit()
         }
     }
 
