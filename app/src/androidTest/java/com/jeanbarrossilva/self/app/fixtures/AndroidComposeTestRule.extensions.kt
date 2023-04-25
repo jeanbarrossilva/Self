@@ -41,6 +41,7 @@ internal class IllegalDestinationException(expected: NavDestination, actual: Nav
  * @param coroutineScope [CoroutineScope] in which navigation to the [NavDestination] will be
  * awaited.
  * @param id [ID][NavDestination.id] of the [NavDestination].
+ * @param timeout Await [Duration].
  * @throws NonexistentDestinationException If such [NavDestination] doesn't exist.
  * @throws IllegalStateException If the [AndroidComposeTestRule.activity] doesn't have a primary
  * navigation [Fragment].
