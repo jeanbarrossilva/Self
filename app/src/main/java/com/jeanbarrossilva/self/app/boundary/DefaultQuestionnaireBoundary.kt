@@ -6,6 +6,6 @@ import com.jeanbarrossilva.self.feature.questionnaire.QuestionnaireBoundary
 
 internal class DefaultQuestionnaireBoundary : QuestionnaireBoundary {
     override fun navigateToWheel(navController: NavController) {
-        navController.navigate(R.id.to_wheel)
+        navController.popBackStack(R.id.wheel_fragment, inclusive = false)
     }
 }

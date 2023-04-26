@@ -16,7 +16,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -77,13 +76,8 @@ internal fun Wheel(
     val isFabVisible = remember(loadable) { loadable is Loadable.Loaded }
     val title = remember(loadable) { loadable.map(FeatureWheel::name).contentOrNull.orEmpty() }
     val lazyColumnState = rememberLazyListState()
-    val lazyColumnLayoutInfo by remember(lazyColumnState) {
-        derivedStateOf {
-            lazyColumnState.layoutInfo
-        }
-    }
     val lazyColumnHeight =
-        remember(lazyColumnLayoutInfo) { lazyColumnLayoutInfo.viewportSize.height.toDp(density) }
+        remember(lazyColumnState) { lazyColumnState.layoutInfo.viewportSize.height.toDp(density) }
     val areasLoadable = remember(loadable) {
         loadable.map { wheel -> wheel.areas.serialize() }
     }

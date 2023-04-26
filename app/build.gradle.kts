@@ -54,5 +54,6 @@ dependencies {
     androidTestImplementation(Libraries.COMPOSE_UI_TEST_JUNIT4)
     androidTestImplementation(Libraries.COMPOSE_UI_TEST_MANIFEST)
     androidTestImplementation(Libraries.KOIN_TEST)
+    androidTestImplementation(Libraries.LOADABLE)
     androidTestImplementation(Libraries.TURBINE)
 }

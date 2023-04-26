@@ -2,7 +2,12 @@ package com.jeanbarrossilva.self.app.fixtures
 
 import android.os.Bundle
 import androidx.annotation.IdRes
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
@@ -10,6 +15,10 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.findNavController
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.jeanbarrossilva.self.feature.questionnaire.step.STEP_ANSWER_TAG
+import com.jeanbarrossilva.self.feature.questionnaire.step.STEP_NEXT_BUTTON_TAG
+import com.jeanbarrossilva.self.feature.wheel.WheelModel
+import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import kotlin.coroutines.resume
 import kotlin.time.Duration
 import kotlinx.coroutines.CoroutineScope
@@ -35,6 +44,23 @@ internal class IllegalDestinationException(expected: NavDestination, actual: Nav
     IllegalStateException("Navigated to $actual instead of to $expected.")
 
 /**
+ * Waits until we're in the right destination and answers the questionnaire based on sample content.
+ *
+ * @see awaitNavigationTo
+ **/
+internal fun <T : FragmentActivity> AndroidComposeTestRule<ActivityScenarioRule<T>, T>.answerQuestionnaire() { // ktlint-disable max-line-length
+    onNodeWithTag(STEP_NEXT_BUTTON_TAG).performClick()
+    FeatureArea.samples.map { WheelModel.format(it.attention) - '%' }.forEach {
+        @OptIn(ExperimentalTestApi::class)
+        waitUntilExactlyOneExists(hasTestTag(STEP_ANSWER_TAG))
+
+        onNodeWithTag(STEP_ANSWER_TAG).performClick()
+        onNodeWithTag(STEP_ANSWER_TAG).performTextInput(it)
+        onNodeWithTag(STEP_NEXT_BUTTON_TAG).performClick()
+    }
+}
+
+/**
  * Suspends until [timeout], waiting for the [NavDestination] identified as [id] to get navigated
  * to.
  *
@@ -51,13 +77,13 @@ internal class IllegalDestinationException(expected: NavDestination, actual: Nav
  * within the [timeout] timeframe.
  **/
 @Suppress("KDocUnresolvedReference")
-internal suspend inline fun <T : FragmentActivity> AndroidComposeTestRule<ActivityScenarioRule<T>, T>.waitForDestination( // ktlint-disable max-line-length
+internal suspend inline fun <T : FragmentActivity> AndroidComposeTestRule<ActivityScenarioRule<T>, T>.awaitNavigationTo( // ktlint-disable max-line-length
     coroutineScope: CoroutineScope,
     @IdRes id: Int,
     timeout: Duration
 ) {
-    val job = coroutineScope.launch { waitForDestination(id, isInclusive = false) }
-    withTimeoutOrNull(timeout) { job.join() } ?: job.cancel(
+    val job = coroutineScope.launch { awaitNavigationTo(id, isInclusive = false) }
+    withTimeoutOrNull(timeout) { job.join() } ?: coroutineScope.cancel(
         "Didn't navigate to ${getDestination(id)} after $timeout."
     )
 }
@@ -75,7 +101,7 @@ internal suspend inline fun <T : FragmentActivity> AndroidComposeTestRule<Activi
  * than the awaited one.
  **/
 @Suppress("KDocUnresolvedReference")
-internal suspend inline fun <T : FragmentActivity> AndroidComposeTestRule<ActivityScenarioRule<T>, T>.waitForDestination( // ktlint-disable max-line-length
+internal suspend inline fun <T : FragmentActivity> AndroidComposeTestRule<ActivityScenarioRule<T>, T>.awaitNavigationTo( // ktlint-disable max-line-length
     @IdRes id: Int,
     isInclusive: Boolean = true
 ) {

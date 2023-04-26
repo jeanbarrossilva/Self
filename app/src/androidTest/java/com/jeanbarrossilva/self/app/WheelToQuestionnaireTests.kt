@@ -1,17 +1,14 @@
 package com.jeanbarrossilva.self.app
 
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
-import com.jeanbarrossilva.self.app.fixtures.minus
-import com.jeanbarrossilva.self.app.fixtures.waitForDestination
+import com.jeanbarrossilva.self.app.fixtures.answerQuestionnaire
+import com.jeanbarrossilva.self.app.fixtures.awaitNavigationTo
 import com.jeanbarrossilva.self.app.module.BoundaryModule
 import com.jeanbarrossilva.self.app.module.CoreModule
-import com.jeanbarrossilva.self.feature.questionnaire.step.STEP_ANSWER_TAG
-import com.jeanbarrossilva.self.feature.questionnaire.step.STEP_NEXT_BUTTON_TAG
-import com.jeanbarrossilva.self.feature.wheel.WheelModel
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
+import com.jeanbarrossilva.self.feature.wheel.ui.still.CHART_TAG
 import com.jeanbarrossilva.self.wheel.android.test.android
 import com.jeanbarrossilva.self.wheel.core.test.WheelTestRule
 import kotlin.coroutines.cancellation.CancellationException
@@ -40,22 +37,32 @@ internal class WheelToQuestionnaireTests {
     @Test
     fun navigatesToQuestionnaireOnNonexistentWheel() {
         runTest {
-            composeRule.waitForDestination(R.id.questionnaire_fragment)
+            composeRule.awaitNavigationTo(R.id.questionnaire_fragment)
         }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test(expected = CancellationException::class)
     fun doesNotGetIntoQuestionnaireLoop() {
-        composeRule.onNodeWithTag(STEP_NEXT_BUTTON_TAG).performClick()
-        FeatureArea.samples.map { WheelModel.format(it.attention) - '%' }.forEach {
-            composeRule.onNodeWithTag(STEP_ANSWER_TAG).performClick()
-            composeRule.onNodeWithTag(STEP_ANSWER_TAG).performTextInput(it)
-            composeRule.onNodeWithTag(STEP_NEXT_BUTTON_TAG).performClick()
-        }
         runTest {
-            composeRule.waitForDestination(R.id.wheel_fragment)
-            composeRule.waitForDestination(this, R.id.questionnaire_fragment, timeout = 2.seconds)
+            composeRule.awaitNavigationTo(R.id.questionnaire_fragment)
+            composeRule.answerQuestionnaire()
+            composeRule.awaitNavigationTo(R.id.wheel_fragment)
+            composeRule.awaitNavigationTo(this, R.id.questionnaire_fragment, timeout = 2.seconds)
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun loadsWheelAfterAnsweringQuestionnaire() {
+        runTest {
+            composeRule.awaitNavigationTo(R.id.questionnaire_fragment)
+            composeRule.answerQuestionnaire()
+            composeRule.awaitNavigationTo(R.id.wheel_fragment)
+            composeRule.onNodeWithTag(CHART_TAG, useUnmergedTree = true).assertTextEquals(
+                *FeatureArea.samples.map(FeatureArea::name).toTypedArray(),
+                includeEditableText = false
+            )
         }
     }
 }
