@@ -8,39 +8,43 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.jeanbarrossilva.self.feature.questionnaire.domain.attention.Attention
 import com.jeanbarrossilva.self.wheel.core.infra.WheelEditor
 import com.jeanbarrossilva.self.wheel.core.infra.WheelRegister
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-internal class QuestionnaireViewModel(
+class QuestionnaireViewModel internal constructor(
     application: Application,
     private val register: WheelRegister,
     private val editor: WheelEditor
 ) : AndroidViewModel(application) {
     private val answers = mutableMapOf<String, @Attention Float>()
 
-    fun answer(areaName: String, @Attention answer: Float?) {
+    internal fun answer(areaName: String, @Attention answer: Float?) {
         answer?.let {
             answers[areaName] = it
         }
     }
 
-    fun registerWheel() {
-        viewModelScope.launch {
+    internal fun registerWheel(): Job {
+        return viewModelScope.launch {
             register.register(WHEEL_NAME)
             addAreas()
         }
     }
 
     private suspend fun addAreas() {
-        answers.forEach { (areaName, answer) ->
-            editor.onWheel(WHEEL_NAME).addArea(areaName, attention = answer).submit()
-        }
+        val wheelScope = editor.onWheel(WHEEL_NAME)
+        answers.forEach { (areaName, answer) -> wheelScope.addArea(areaName, answer) }
+        wheelScope.submit()
     }
 
     companion object {
-        private const val WHEEL_NAME = "Roda da vida"
+        const val WHEEL_NAME = "Roda da vida"
 
-        fun createFactory(application: Application, register: WheelRegister, editor: WheelEditor):
-            ViewModelProvider.Factory {
+        internal fun createFactory(
+            application: Application,
+            register: WheelRegister,
+            editor: WheelEditor
+        ): ViewModelProvider.Factory {
             return viewModelFactory {
                 addInitializer(QuestionnaireViewModel::class) {
                     QuestionnaireViewModel(application, register, editor)

@@ -1,5 +1,6 @@
-package com.jeanbarrossilva.self.feature.wheel.domain
+package com.jeanbarrossilva.self.feature.wheel.domain.wheel
 
+import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import java.io.Serializable
 
 data class FeatureWheel internal constructor(val name: String, val areas: List<FeatureArea>) :

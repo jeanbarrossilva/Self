@@ -5,7 +5,7 @@ plugins {
 
 @Suppress("UnstableApiUsage")
 android {
-    namespace = Metadata.namespace("platform.ui")
+    namespace = Metadata.namespace("feature.wheel.test")
     compileSdk = Versions.Self.SDK_COMPILE
 
     defaultConfig {
@@ -28,11 +28,6 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-        viewBinding = true
-    }
-
     compileOptions {
         sourceCompatibility = Versions.java
         targetCompatibility = Versions.java
@@ -41,15 +36,9 @@ android {
     kotlinOptions {
         jvmTarget = Versions.java.toString()
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
-    }
 }
 
 dependencies {
-    implementation(kotlin("reflect"))
-    implementation(Libraries.AURELIUS)
-    implementation(Libraries.COMPOSE_COLLAPSING_TOOLBAR)
-    implementation(Libraries.NAVIGATION_FRAGMENT)
+    implementation(project(":feature-wheel"))
+    implementation(Libraries.COMPOSE_UI_TEST_JUNIT4)
 }

@@ -60,4 +60,11 @@ dependencies {
     testImplementation(project(":wheel-in-memory-test"))
     testImplementation(Libraries.JUNIT)
     testImplementation(Libraries.KOTLINX_COROUTINES_TEST)
+
+    androidTestImplementation(project(":feature-wheel-test"))
+    androidTestImplementation(project(":platform-ui"))
+    androidTestImplementation(project(":wheel-android-test"))
+    androidTestImplementation(Libraries.COMPOSE_UI_TEST_JUNIT4)
+    androidTestImplementation(Libraries.KOTLINX_COROUTINES_TEST)
+    androidTestImplementation(Libraries.KOIN_TEST)
 }

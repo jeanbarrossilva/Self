@@ -3,6 +3,7 @@ include(
     ":app",
     ":app-test",
     ":feature-wheel",
+    ":feature-wheel-test",
     ":feature-questionnaire",
     ":platform-ui",
     ":wheel-android",

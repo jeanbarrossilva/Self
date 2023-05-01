@@ -49,6 +49,7 @@ dependencies {
     implementation(Libraries.NAVIGATION_UI)
 
     androidTestImplementation(project(":app-test"))
+    androidTestImplementation(project(":feature-wheel-test"))
     androidTestImplementation(project(":platform-ui"))
     androidTestImplementation(project(":wheel-android-test"))
     androidTestImplementation(Libraries.COMPOSE_UI_TEST_JUNIT4)

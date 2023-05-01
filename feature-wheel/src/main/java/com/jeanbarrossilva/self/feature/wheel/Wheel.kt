@@ -43,7 +43,7 @@ import com.jeanbarrossilva.self.feature.wheel.core.loadable.flatMap
 import com.jeanbarrossilva.self.feature.wheel.core.placeholder.PlaceholderSize
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureToDo
-import com.jeanbarrossilva.self.feature.wheel.domain.FeatureWheel
+import com.jeanbarrossilva.self.feature.wheel.domain.wheel.FeatureWheel
 import com.jeanbarrossilva.self.feature.wheel.ui.still.Chart
 import com.jeanbarrossilva.self.feature.wheel.ui.still.todo.ToDos
 import com.jeanbarrossilva.self.feature.wheel.utils.placeholder

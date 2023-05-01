@@ -87,8 +87,9 @@ class QuestionnaireFragment internal constructor() :
     }
 
     private fun onDone() {
-        viewModel.registerWheel()
-        navigateToWheel()
+        viewModel.registerWheel().invokeOnCompletion {
+            navigateToWheel()
+        }
     }
 
     private fun navigateToWheel() {

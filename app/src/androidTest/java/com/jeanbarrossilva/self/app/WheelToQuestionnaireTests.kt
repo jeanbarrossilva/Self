@@ -1,6 +1,5 @@
 package com.jeanbarrossilva.self.app
 
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.jeanbarrossilva.self.app.fixtures.answerQuestionnaire
@@ -8,6 +7,9 @@ import com.jeanbarrossilva.self.app.fixtures.awaitNavigationTo
 import com.jeanbarrossilva.self.app.module.BoundaryModule
 import com.jeanbarrossilva.self.app.module.CoreModule
 import com.jeanbarrossilva.self.feature.wheel.domain.FeatureArea
+import com.jeanbarrossilva.self.feature.wheel.test.assertWheel
+import com.jeanbarrossilva.self.feature.wheel.test.assertion.hasAreas
+import com.jeanbarrossilva.self.feature.wheel.test.assertion.hasAttentions
 import com.jeanbarrossilva.self.feature.wheel.ui.still.CHART_TAG
 import com.jeanbarrossilva.self.wheel.android.test.android
 import com.jeanbarrossilva.self.wheel.core.test.WheelTestRule
@@ -55,13 +57,15 @@ internal class WheelToQuestionnaireTests {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun loadsWheelAfterAnsweringQuestionnaire() {
+        val areaSamples = FeatureArea.samples
+        val sampleAreaNames = areaSamples.map(FeatureArea::name).toTypedArray()
+        val sampleAreaAttentions = areaSamples.map(FeatureArea::attention).toFloatArray()
         runTest {
             composeRule.awaitNavigationTo(R.id.questionnaire_fragment)
             composeRule.answerQuestionnaire()
             composeRule.awaitNavigationTo(R.id.wheel_fragment)
-            composeRule.onNodeWithTag(CHART_TAG, useUnmergedTree = true).assertTextEquals(
-                *FeatureArea.samples.map(FeatureArea::name).toTypedArray(),
-                includeEditableText = false
+            composeRule.onNodeWithTag(CHART_TAG).assertWheel(
+                hasAreas(*sampleAreaNames) and hasAttentions(*sampleAreaAttentions)
             )
         }
     }
